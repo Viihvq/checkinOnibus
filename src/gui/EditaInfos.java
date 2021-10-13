@@ -19,7 +19,7 @@ public class EditaInfos {
     Connection conexaoBanco;
 
     public EditaInfos(){}
-
+    //resolver esse segundo argumento<<<<<<<<<<<<<<<<<<<<<
     public JPanel criaJPanelEditaInfos(Bilhete bilhete, ConexaoInfos conexaoInfos) throws SQLException {
 //        this.conexaoBanco = conexaoBanco;
 
@@ -57,8 +57,6 @@ public class EditaInfos {
         editaNome = new JTextField(nomePassageiroBanco); //Aparece o nome no texto
         edicao.add(editaNome);
 
-        conexaoInfos.getAttInfosBanco(nomePassageiroBanco, cpfPassageiroBanco);
-        //Para conseguir atualizar os dados
 
         JPanel opcoes = new JPanel();
 

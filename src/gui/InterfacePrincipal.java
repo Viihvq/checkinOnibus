@@ -21,37 +21,30 @@ public class InterfacePrincipal extends  JFrame{
     private Assento telaAssento;
     private JButton btcheck;
     private Bilhete bilheteInfosBanco = new Bilhete();
-    private ConexaoInfos conexaoInfos = new ConexaoInfos(conexaoBanco);
+    private ConexaoInfos conexaoInfos;
 
-    public InterfacePrincipal(Connection conexao) throws SQLException {
+    public InterfacePrincipal(Connection conexao){
         conexaoBanco = conexao; //Recebe os dados do BD
 
         cardPanel.setLayout(cardLayout);
         setContentPane(cardPanel);
 
         telaInicial = new Home();
-        add(getTelaInicial(), "inicial"); //Adicionona a tela e o nome
+        add(getTelaInicial(), "inicial"); //Adiciona a tela e o nome
 
         telaSolicitaCod = new SolicitaCod();
-        add(getSolicitaCod(), "solicitacao"); //adiciona a tela e o nome
+        add(getSolicitaCod(), "solicitacao"); //Adiciona a tela e o nome
 
 
         telaInfos = new Infos();
-//        add(getTelaInfos(), "infos"); //talvez de m aqui, nao sei
+//        add(getTelaInfos(), "infos"); //talvez de m aqui, nao sei TEM QUE DEIXAR FORA MSM
 
         telaEditaInfos = new EditaInfos();
-//        add(getTelaEditaInfos(), "edita infos");
+//        add(getTelaEditaInfos(), "edita infos"); TEM QUE DEIXAR FORA MESMO POR CAUSA QUE EU ADICIONO NOS METODOS ABAIXO
 
         telaAssento = new Assento();
         add(getTelaAssento(), "assento");
 
-
-        /*
-        *
-        * FALTA:
-   -Exibir as informações do bilhete e do passageiro
-   -Editar as informações do passageiro
-        * */
 
         botaoInicial(); //ActionListener
         botaoSolicitaCod(); //ActionListener
@@ -69,16 +62,28 @@ public class InterfacePrincipal extends  JFrame{
 
     private void botoesEditaInfo(){
         telaEditaInfos.getBtSalvar().addActionListener((al) -> {
-            exibe("infos");
-            setTitle("Informações");
+            try {
+                conexaoInfos.getAttInfosBanco(bilheteInfosBanco.getPassageiro().getId(), //Id, nome e CPF para atualizar
+                                              telaEditaInfos.editaNome.getText(),
+                                              telaEditaInfos.editaCpf.getText());
+                bilheteInfosBanco = conexaoInfos.getInfosBanco(bilheteInfosBanco.getCodigo());
+                this.cardLayout.removeLayoutComponent(getTelaInfos()); //Se não remover, não retorna com as informações nova
+                add(getTelaInfos(), "infos"); //Adiciona de novo para aparecer as informações atualizadas
+                System.out.println("Debug AL salvar");
+                exibe("infos");
+                setTitle("Informações");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         });
+
         telaEditaInfos.getBtVoltar().addActionListener((al) -> {
             exibe("infos");
             setTitle("Informações");
         });
     }
 
-    private void botoesInfo(){
+    private void botoesInfo(){ //Botoes Atualizar infos e próximo da tela Informações
         telaInfos.getBtAtt().addActionListener((al) -> {
 
             try { //pediu trycatch dps de colocar o .conexao no getattinfos
@@ -100,9 +105,11 @@ public class InterfacePrincipal extends  JFrame{
         telaSolicitaCod.getbtSolicita().addActionListener((al) -> {
             try {
                 if (new ConexaoCodigos(conexaoBanco).codLocalizado(telaSolicitaCod.txtSolicita.getText())){
-//                    telaInfos = new Infos();
+
+                    conexaoInfos = new ConexaoInfos(conexaoBanco);
+
 //                    bilheteInfosBanco = new ConexaoInfos(conexaoBanco).getInfosBanco(telaSolicitaCod.txtSolicita.getText());
-                    bilheteInfosBanco = conexaoInfos.getInfosBanco(telaSolicitaCod.txtSolicita.getText());
+                    bilheteInfosBanco = conexaoInfos.getInfosBanco(telaSolicitaCod.txtSolicita.getText()); //pega as informações do bilhete do banco para a tela de infos
                     add(getTelaInfos(), "infos");
                     exibe("infos");
                     setTitle("Informações");
@@ -150,7 +157,7 @@ public class InterfacePrincipal extends  JFrame{
 //                ci.getInfosBanco(telaSolicitaCod.txtSolicita.getText()); //acho que posso criar aqui direto e tirar de lá de cima
         //pega o código da telaSolicita, manda para o metodo do conexaoInfo e ele retorna um array com informações para o telaInfos
 
-        return telaInfos.criaJPanelInfos(bilheteInfosBanco);
+        return telaInfos.criaJPanelInfos(bilheteInfosBanco); //O bilheteInfosBanco foi preenchido no metodo botaoSolicitaCodigo
     }
 
     private JPanel getTelaEditaInfos() throws SQLException {
