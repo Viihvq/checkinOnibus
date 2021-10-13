@@ -1,25 +1,35 @@
 package gui;
 
+import dados.ConexaoInfos;
+import entidades.Bilhete;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class EditaInfos {
     JFrame frame = new JFrame();
     JButton salvar = new JButton("Salvar");
     JButton voltar = new JButton("Voltar");
-    JTextField editaCpf = new JTextField();
-    JTextField editaNome = new JTextField();
+    JTextField editaCpf;// = new JTextField();
+    JTextField editaNome;// = new JTextField();
     Connection conexaoBanco;
 
     public EditaInfos(){}
 
-    public JPanel criaJPanelEditaInfos(){
+    public JPanel criaJPanelEditaInfos(Bilhete bilhete, ConexaoInfos conexaoInfos) throws SQLException {
 //        this.conexaoBanco = conexaoBanco;
 
         JPanel geral = new JPanel();
+
+/*
+* Aqui, quando eu clicar no botão de salvar, vou jogar as informações do que foi escrito
+* para a classe ConexaoEditaPassageiro. Mas, antes disso, eu preciso saber o nome e
+* o cpf do passageiro, então tenho que chamar 2x o ConexaoEditaPassageiro
+* */
 
 
         JPanel edicao = new JPanel();
@@ -35,14 +45,20 @@ public class EditaInfos {
 
 //        editaCpf.setColumns(12); //tamanho da caixa de texto
 
+        String cpfPassageiroBanco = bilhete.getPassageiro().getCpf();
+        editaCpf = new JTextField(cpfPassageiroBanco); //Faz aparecer o cpf no texto
         edicao.add(editaCpf);
 
         JLabel lblNome = new JLabel("Edita nome: ");
-
         edicao.add(lblNome);
 
 //        editaNome.setColumns(12);
+        String nomePassageiroBanco = bilhete.getPassageiro().getNome();
+        editaNome = new JTextField(nomePassageiroBanco); //Aparece o nome no texto
         edicao.add(editaNome);
+
+        conexaoInfos.getAttInfosBanco(nomePassageiroBanco, cpfPassageiroBanco);
+        //Para conseguir atualizar os dados
 
         JPanel opcoes = new JPanel();
 

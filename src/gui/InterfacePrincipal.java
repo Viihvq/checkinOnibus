@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class InterfacePrincipal extends  JFrame{
+    private Connection conexaoBanco;
+
     private JPanel cardPanel = new JPanel();
     private CardLayout cardLayout = new CardLayout();
     private Home telaInicial;
@@ -19,8 +21,7 @@ public class InterfacePrincipal extends  JFrame{
     private Assento telaAssento;
     private JButton btcheck;
     private Bilhete bilheteInfosBanco = new Bilhete();
-
-    private Connection conexaoBanco;
+    private ConexaoInfos conexaoInfos = new ConexaoInfos(conexaoBanco);
 
     public InterfacePrincipal(Connection conexao) throws SQLException {
         conexaoBanco = conexao; //Recebe os dados do BD
@@ -36,10 +37,10 @@ public class InterfacePrincipal extends  JFrame{
 
 
         telaInfos = new Infos();
-//        add(getTelaInfos(), "infos"); //talvez de merda aqui, nao sei
+//        add(getTelaInfos(), "infos"); //talvez de m aqui, nao sei
 
         telaEditaInfos = new EditaInfos();
-        add(getTelaEditaInfos(), "edita infos");
+//        add(getTelaEditaInfos(), "edita infos");
 
         telaAssento = new Assento();
         add(getTelaAssento(), "assento");
@@ -79,7 +80,14 @@ public class InterfacePrincipal extends  JFrame{
 
     private void botoesInfo(){
         telaInfos.getBtAtt().addActionListener((al) -> {
-            exibe("edita infos");
+
+            try { //pediu trycatch dps de colocar o .conexao no getattinfos
+                add(getTelaEditaInfos(), "edita infos"); /**/
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            exibe("edita infos");/**/
             setTitle("Edição de dados");
         });
         telaInfos.getBtProx().addActionListener((al) -> {
@@ -89,13 +97,14 @@ public class InterfacePrincipal extends  JFrame{
     }
 
     private void botaoSolicitaCod(){ //método do botão para quando o usuário enviar o código
-        telaSolicitaCod.getbtSolicita().addActionListener((al) -> { //só um teste para ver se vai retornar para inicial
+        telaSolicitaCod.getbtSolicita().addActionListener((al) -> {
             try {
                 if (new ConexaoCodigos(conexaoBanco).codLocalizado(telaSolicitaCod.txtSolicita.getText())){
 //                    telaInfos = new Infos();
-                    bilheteInfosBanco = new ConexaoInfos(conexaoBanco).getInfosBanco(telaSolicitaCod.txtSolicita.getText());
-                    add(getTelaInfos(), "infos"); //talvez de merda aqui, nao sei
-                    exibe("infos"); //tem que colocar aqui a chamada do conexaoinfos
+//                    bilheteInfosBanco = new ConexaoInfos(conexaoBanco).getInfosBanco(telaSolicitaCod.txtSolicita.getText());
+                    bilheteInfosBanco = conexaoInfos.getInfosBanco(telaSolicitaCod.txtSolicita.getText());
+                    add(getTelaInfos(), "infos");
+                    exibe("infos");
                     setTitle("Informações");
                 }else{
                     System.out.println("NÃO LOCALIZADO");
@@ -133,22 +142,20 @@ public class InterfacePrincipal extends  JFrame{
         return telaSolicitaCod.criaJPanelSolicita();
     }
 
-    private JPanel getTelaInfos() throws SQLException {
+    private JPanel getTelaInfos() /*throws SQLException*/ {
 //        telaInfos = new Infos();
 //        ConexaoInfos ci = new ConexaoInfos(conexaoBanco);
-        /**
-         * COLOCAR ESSE BILHETE NO BOTAOSOLICITACOD
-
-        Bilhete bilheteInfosBanco = new ConexaoInfos(conexaoBanco).getInfosBanco(telaSolicitaCod.txtSolicita.getText());
+//        COLOCAR ESSE BILHETE NO BOTAOSOLICITACOD
+//        Bilhete bilheteInfosBanco = new ConexaoInfos(conexaoBanco).getInfosBanco(telaSolicitaCod.txtSolicita.getText());
 //                ci.getInfosBanco(telaSolicitaCod.txtSolicita.getText()); //acho que posso criar aqui direto e tirar de lá de cima
         //pega o código da telaSolicita, manda para o metodo do conexaoInfo e ele retorna um array com informações para o telaInfos
-        */
+
         return telaInfos.criaJPanelInfos(bilheteInfosBanco);
     }
 
-    private JPanel getTelaEditaInfos(){
-        telaEditaInfos = new EditaInfos();
-        return telaEditaInfos.criaJPanelEditaInfos();
+    private JPanel getTelaEditaInfos() throws SQLException {
+//        telaEditaInfos = new EditaInfos(); //Se eu fizer isso não funciona a volta dos botoes att e voltar
+        return telaEditaInfos.criaJPanelEditaInfos(bilheteInfosBanco, conexaoInfos); //Tenho que passar o bilhete com as infos e a classe que tem os metodos de procura
     }
 
     private JPanel getTelaAssento(){
