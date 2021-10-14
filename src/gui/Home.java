@@ -6,17 +6,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 
-public class Home{ //acho que agora posso herdar de interface, pq ai vai ser o mesmo frame no final!
+public class Home{
     JButton btcheck;
     JPanel checkingPanel;
-//    JFrame frame = new JFrame();
-    Connection conexaoBanco;
 
     public Home(){
         criaJPanelHome();
     }
     public JPanel criaJPanelHome() {
-//        this.conexaoBanco = conexaoBanco;
+
 
         checkingPanel = new JPanel(); //home
         checkingPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));

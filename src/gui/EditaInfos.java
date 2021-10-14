@@ -63,17 +63,11 @@ public class EditaInfos {
         opcoes.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 
 
-        salvar.addActionListener(al);
+//        salvar.addActionListener(al); SE DER PROBLEMA PODE SER AQUI QUE COMENTEI
         opcoes.add(salvar);
 
-        voltar.addActionListener(al);
+//        voltar.addActionListener(al);
         opcoes.add(voltar);
-
-
-//        frame.getContentPane().add(edicao, BorderLayout.CENTER);
-//        frame.getContentPane().add(opcoes, BorderLayout.SOUTH);
-
-//        frameSettings();
 
         geral.add(edicao);
         geral.add(opcoes);
@@ -89,12 +83,12 @@ public class EditaInfos {
         return voltar;
     }
 
-    ActionListener al = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-        }
-    };
+//    ActionListener al = new ActionListener() {
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//
+//        }
+//    };
 
 //    public void frameSettings(){ //Método que seta tamanho, posição, fechamento do frame
 //        frame.addComponentListener(new ComponentAdapter() {
