@@ -35,10 +35,10 @@ public class ConexaoInfos{
 
     public Bilhete getInfosBanco(String codigo) throws SQLException {
 
-        PreparedStatement comandoListarInfos = conexao.prepareStatement("SELECT \"bilhete\".codigo, \"passageiro\".id,\"passageiro\".nome, \"passageiro\".cpf, \"linha\".origem, " +
+        PreparedStatement comandoListarInfos = conexao.prepareStatement("SELECT \"bilhete\".codigo, \"bilhete\".assento ,\"passageiro\".id,\"passageiro\".nome, \"passageiro\".cpf, \"linha\".origem, " +
                 "\"linha\".destino, \"linha\".hora_embarque, \"linha\".hora_partida FROM \"public\".\"linha\" JOIN \"public\".\"bilhete\" ON \"linha\".id = \"bilhete\".id_linha " +
                 "JOIN \"public\".\"passageiro\" ON \"bilhete\".id_passageiro = \"passageiro\".id AND \"bilhete\".codigo = ?;");
-        //cod, nome, cpf, origem, destino, embarque, partida
+        //cod, assento, nome, cpf, origem, destino, embarque, partida
         comandoListarInfos.setString(1, codigo);
         comandoListarInfos.execute();
         ResultSet rs = comandoListarInfos.getResultSet();
@@ -47,13 +47,14 @@ public class ConexaoInfos{
         while (rs.next()){
             System.out.println(rs.getString(1)+rs.getString(2)+rs.getString(3)+rs.getString(4)+rs.getString(5));
             bilhete.setCodigo(rs.getString(1));
-            passageiro.setId(rs.getInt(2));
-            passageiro.setNome(rs.getString(3));
-            passageiro.setCpf(rs.getString(4));
-            linha.setOrigem(rs.getString(5));
-            linha.setDestino(rs.getString(6));
-            linha.setHora_embarque(rs.getTime(7));
-            linha.setHora_partida(rs.getTime(8));
+            bilhete.setAssento(rs.getString(2)); //se der merda o problema ta aqui
+            passageiro.setId(rs.getInt(3));
+            passageiro.setNome(rs.getString(4));
+            passageiro.setCpf(rs.getString(5));
+            linha.setOrigem(rs.getString(6));
+            linha.setDestino(rs.getString(7));
+            linha.setHora_embarque(rs.getTime(8));
+            linha.setHora_partida(rs.getTime(9));
             bilhete.setPassageiro(passageiro);
             bilhete.setLinha(linha);
         }

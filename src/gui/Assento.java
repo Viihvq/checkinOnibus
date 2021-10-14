@@ -1,24 +1,28 @@
 package gui;
 
+import dados.ConexaoAssento;
+import entidades.Bilhete;
 import org.postgresql.shaded.com.ongres.scram.common.bouncycastle.pbkdf2.Pack;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Assento{
-    List<JButton> bancos = new ArrayList<>();
-    char[][] fileiras = new char[6][6];
-//    JFrame frame = new JFrame();
-    boolean teste = false;
-    int linhaSelecionada;
-    int colunaSelecionada;
+//    List<JButton> bancos = new ArrayList<>();
+//    char[][] fileiras = new char[6][6];
+////    JFrame frame = new JFrame();
+//    boolean teste = false;
+//    int linhaSelecionada;
+//    int colunaSelecionada;
     public Assento(){}
 
-    public JPanel criaJPanelAssento(){
+    public JPanel criaJPanelAssento(Bilhete bilhete, Connection conexao) throws SQLException {
         JPanel painel = new JPanel();
 
 //        GridLayout gl = new GridLayout(9,2);
@@ -34,16 +38,31 @@ public class Assento{
         painel.setBackground(Color.pink);
         JPanel painel1 = new JPanel();
 
-        painel1.setBackground(Color.green);
+        painel1.setBackground(Color.yellow);
         GridLayout gl = new GridLayout(7,2);
         gl.setVgap(3);
         gl.setHgap(3);
         painel1.setLayout(gl);
 //        painel1.setSize(60,350);
 
+        ConexaoAssento assentos = new ConexaoAssento(bilhete,conexao);
+        Integer[] ocupados = assentos.isOccupied();
+
+        for (int i=0;i<ocupados.length;i++){
+            System.out.println(ocupados[i]);
+        }
+
         for (int i =0; i<14;i++){
-            JButton botao = new JButton(""+(i+1));
+            /**Tem que ter verificação dos assentos aqui, se está livre ou não*/
+            JButton botao = new JButton(""+i);
             botao.setBorder(BorderFactory.createEmptyBorder(6,20,6,20));
+
+            if (ocupados[i]==i){
+                botao.setEnabled(false);
+                botao.setBackground(Color.red);
+            }else{
+                    botao.setBackground(Color.green);
+                }
             painel1.add(botao);
         }
 
@@ -60,14 +79,25 @@ public class Assento{
         gl2.setHgap(3);
         painel2.setLayout(gl2);
 
+
         for (int i =14; i<28;i++){
-            JButton botao = new JButton(""+(i+1)+"");
+            /**Tem que ter verificação dos assentos aqui, se está livre ou não*/
+            JButton botao = new JButton(""+i);
             botao.setBorder(BorderFactory.createEmptyBorder(6,20,6,20));
+
+            if (ocupados[i]==i){
+                botao.setEnabled(false);
+                botao.setBackground(Color.red);
+            }else{
+                botao.setBackground(Color.green);
+            }
             painel2.add(botao);
         }
 
         painel.add(painel2, BorderLayout.WEST);
 
+
+        //Colocar um if aqui para se caso usuario ja tiver escolhido seu banco
         JButton salvar = new JButton("Salvar");
         salvar.setBorder(BorderFactory.createEmptyBorder(10,45,10,45));
         painel.add(salvar, BorderLayout.SOUTH);

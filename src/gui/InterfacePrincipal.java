@@ -23,7 +23,7 @@ public class InterfacePrincipal extends  JFrame{
     private Bilhete bilheteInfosBanco = new Bilhete();
     private ConexaoInfos conexaoInfos;
 
-    public InterfacePrincipal(Connection conexao){
+    public InterfacePrincipal(Connection conexao) throws SQLException {
         conexaoBanco = conexao; //Recebe os dados do BD
 
         cardPanel.setLayout(cardLayout);
@@ -43,7 +43,7 @@ public class InterfacePrincipal extends  JFrame{
 //        add(getTelaEditaInfos(), "edita infos"); TEM QUE DEIXAR FORA MESMO POR CAUSA QUE EU ADICIONO NOS METODOS ABAIXO
 
         telaAssento = new Assento();
-        add(getTelaAssento(), "assento");
+//        add(getTelaAssento(), "assento");
 
 
         botaoInicial(); //ActionListener
@@ -55,6 +55,7 @@ public class InterfacePrincipal extends  JFrame{
         setTitle("Checking");
 
         setSize(350,350);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Programa para derodar ao clicar no X
         setLocationRelativeTo(null); //Tela centralizada
         setVisible(true);
@@ -95,7 +96,15 @@ public class InterfacePrincipal extends  JFrame{
             exibe("edita infos");/**/
             setTitle("Edição de dados");
         });
+
         telaInfos.getBtProx().addActionListener((al) -> {
+            try {
+//   n precisa disso, ja tem as infos no global vvvv
+//   bilheteInfosBanco = conexaoInfos.getInfosBanco(telaSolicitaCod.txtSolicita.getText()); //pega as informações do bilhete do banco para a tela de assento
+                add(getTelaAssento(), "assento");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             exibe("assento"); //AINDA NAO FIZ
             setTitle("Assentos");
         });
@@ -165,9 +174,9 @@ public class InterfacePrincipal extends  JFrame{
         return telaEditaInfos.criaJPanelEditaInfos(bilheteInfosBanco, conexaoInfos); //Tenho que passar o bilhete com as infos e a classe que tem os metodos de procura
     }
 
-    private JPanel getTelaAssento(){
-        telaAssento = new Assento();
-        return telaAssento.criaJPanelAssento();
+    private JPanel getTelaAssento() throws SQLException {
+//        telaAssento = new Assento();
+        return telaAssento.criaJPanelAssento(bilheteInfosBanco, conexaoBanco);
     }
 
 //    public static void main(String[] args) throws SQLException {
