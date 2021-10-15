@@ -50,6 +50,7 @@ public class InterfacePrincipal extends  JFrame{
         botaoSolicitaCod(); //ActionListener
         botoesInfo(); //ActionListener
         botoesEditaInfo(); //ActionListener
+        botaoSalvarAssento();
 
         exibe("inicial"); //quando inicializa pela primeira vez esse que vai aparecer
         setTitle("Checking");
@@ -59,6 +60,28 @@ public class InterfacePrincipal extends  JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Programa para derodar ao clicar no X
         setLocationRelativeTo(null); //Tela centralizada
         setVisible(true);
+    }
+
+    private void botaoSalvarAssento(){
+
+        telaAssento.getSalvarAssento().addActionListener((al)->{
+            try {
+
+                if (bilheteInfosBanco.getAssento() != null){
+                    JOptionPane.showMessageDialog(null,"VOCE JA ESCOLHEU. \nSEU ASSENTO É O "+bilheteInfosBanco.getAssento());
+                    exibe("inicial");
+                }else if(telaAssento.getAssentoSelecionado() != null && bilheteInfosBanco.getAssento() == null){
+                    telaAssento.getConexaoAssentos().cadastroAssento(telaAssento.getAssentoSelecionado(), bilheteInfosBanco.getCodigo());
+                    JOptionPane.showMessageDialog(null,"CHECK IN REALIZADO COM SUCESSO!");
+                    exibe("inicial");
+                }else{
+                    JOptionPane.showMessageDialog(null,"ESCOLHA UMA OPÇÃO");
+                }
+            }catch (Exception e){ //TESTAR TEM INTERNET. D10 E D11 ISSO
+                JOptionPane.showMessageDialog(null,"ERRO INESPERADO","ERROR",JOptionPane.ERROR_MESSAGE);
+            }
+
+        });
     }
 
     private void botoesEditaInfo(){
@@ -114,7 +137,6 @@ public class InterfacePrincipal extends  JFrame{
         telaSolicitaCod.getbtSolicita().addActionListener((al) -> {
             try {
                 if (new ConexaoCodigos(conexaoBanco).codLocalizado(telaSolicitaCod.txtSolicita.getText())){
-
                     conexaoInfos = new ConexaoInfos(conexaoBanco);
 
 //                    bilheteInfosBanco = new ConexaoInfos(conexaoBanco).getInfosBanco(telaSolicitaCod.txtSolicita.getText());
@@ -134,6 +156,7 @@ public class InterfacePrincipal extends  JFrame{
                 e.printStackTrace();
             }
         });
+
     }
 
     private void botaoInicial(){
