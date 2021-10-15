@@ -20,6 +20,15 @@ public class Assento{
 //    boolean teste = false;
 //    int linhaSelecionada;
 //    int colunaSelecionada;
+    private ArrayList<JButton> listaBotoes = new ArrayList<>();
+    private Integer assentoSelecionado = null;
+    private ActionListener cliqueAssentoSelecionado = (e) ->{
+        if(assentoSelecionado != null){ //se tem um assento já marcado, ele volta pra livre
+            setAssento(assentoSelecionado,"livre");
+        }
+        assentoSelecionado = listaBotoes.indexOf(e.getSource());
+        setAssento(assentoSelecionado, "selecionado");
+    };
     public Assento(){}
 
     public JPanel criaJPanelAssento(Bilhete bilhete, Connection conexao) throws SQLException {
@@ -47,22 +56,24 @@ public class Assento{
 
         for (int i =0; i<14;i++){ //Por questões de gabiarra começa do 0, resolvo isso depois
             JButton botao = new JButton(""+i);
+            botao.addActionListener(cliqueAssentoSelecionado);
             botao.setBorder(BorderFactory.createEmptyBorder(6,20,6,20));
 
             /**Verificação dos assentos, se está livre ou não*/
             if (ocupados[i]==i){
-                botao.setBackground(Color.RED); //Aparentemente isso não funciona junto com o setEnabled
-                botao.setEnabled(false);
+//                botao.setBackground(Color.RED); //Aparentemente isso não funciona junto com o setEnabled
+//                botao.setEnabled(false);
+                listaBotoes.add(botao);
+                setAssento(i,"ocupado");
             }else{
-                botao.setBackground(Color.green);
+//                botao.setBackground(Color.green);
+                listaBotoes.add(botao);
+                setAssento(i,"livre");
                 }
             painel1.add(botao);
         }
 
         painel.add(painel1, BorderLayout.EAST);
-
-//        painel.add(Box.createRigidArea(new Dimension(50,0)));
-//        painel.add(Box.createHorizontalGlue());
 
         //Adiciona um espaço entre as fileiras
         painel.add(new Box.Filler(new Dimension(40,5),new Dimension(40,5),new Dimension(40,5)));
@@ -74,19 +85,23 @@ public class Assento{
         painel2.setLayout(gl2);
 
         for (int i =14; i<28;i++){
-            JButton botao = new JButton(""+(i+1));
+            JButton botao = new JButton(""+i);
+            botao.addActionListener(cliqueAssentoSelecionado);
             botao.setBorder(BorderFactory.createEmptyBorder(6,20,6,20));
-            //setAssento
 
             /**Verificação dos assentos, se está livre ou não*/
             if (ocupados[i]==i){
-                botao.setBackground(Color.RED); //Aparentemente isso não funciona junto com o setEnabled
-                botao.setEnabled(false);
+//                botao.setBackground(Color.RED); //Aparentemente isso não funciona junto com o setEnabled
+//                botao.setEnabled(false);
+                listaBotoes.add(botao);
                 setAssento(i,"ocupado");
             }else{
-                botao.setBackground(Color.green);
+//                botao.setBackground(Color.green);
+                listaBotoes.add(botao);
+                setAssento(i,"livre");
             }
             painel2.add(botao);
+
         }
 
         painel.add(painel2, BorderLayout.WEST);
@@ -100,8 +115,18 @@ public class Assento{
     }
 
     public void setAssento(int assento, String situacao){
-        //tem que colocar o enum aqui
+        JButton b = listaBotoes.get(assento);
+        if(situacao.equals("selecionado")){
+            b.setBackground(Color.CYAN);
+        }else if(situacao.equals("livre")){
+            b.setBackground(Color.green);
+        }else if(situacao.equals("ocupado")){
+//            b.setBackground(Color.red); //Nao ta funcionando nao sei porquê.
+            b.setEnabled(false);
+        }
     }
+//        painel.add(Box.createRigidArea(new Dimension(50,0)));
+//        painel.add(Box.createHorizontalGlue());
 
 //        painel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 //        painel.setLayout(new BoxLayout(painel,));
