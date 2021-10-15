@@ -7,13 +7,17 @@ import java.sql.*;
 public class ConexaoAssento {
     /*
     * Brainstorm do Assento:
+    *  FEITO
     *   -Verificar se o assento está nulo ou não
     *       -não nulo: não deixa marcar novamente
     *       -nulo: deixa marcar.
-    *   -Criação dos botõe:
+    *   -Criação dos botões:
     *       -Assento já marcado: fundo vermelho
     *       -Assento livre: fundo verde
-    *   -
+    *
+    *  AINDA PRA FAZER:
+    *   -Marcar um assento e pintar de verde;
+    *   -Marcar outra opção e desmarcar a marcada anteriormente
     * */
 
     Connection conexao;
@@ -23,9 +27,6 @@ public class ConexaoAssento {
     public ConexaoAssento(Bilhete bilhete, Connection conexao) throws SQLException {
         this.conexao = conexao;
         this.bilhete = bilhete;
-//        this.comandoAssento = conexao.prepareStatement("SELECT \"bilhete\".\"assento\", " +
-//                "\"bilhete\".\"codigo\" FROM \"public\".\"bilhete\";");
-//        System.out.println("DEBUG CONEXAOASSENTO  --  "+bilhete);
     }
 
     public Integer[] isOccupied() throws SQLException { //Verifica se o assento do onibus está ocupado ou nao
@@ -37,13 +38,12 @@ public class ConexaoAssento {
         Integer[] ocupado = new Integer[28];
         int count =0;
 
-        for (int i=0; i<28;i++){
+        for (int i=0; i<28;i++){ //sagacidade pra não dar problema com nulo
             ocupado[i] = -1;
         }
 
         while (rs.next()){
             if(rs.getString(1) != null) {
-//                System.out.println(rs.getString(1));
                 int valor = rs.getInt(1);
                 ocupado[valor] = rs.getInt(1);
                 count++;
@@ -52,12 +52,6 @@ public class ConexaoAssento {
                 count++;
             }
         }
-
-
-        System.out.println(count);
-
-
-
 
         return  ocupado;
     }

@@ -25,16 +25,10 @@ public class Assento{
     public JPanel criaJPanelAssento(Bilhete bilhete, Connection conexao) throws SQLException {
         JPanel painel = new JPanel();
 
-//        GridLayout gl = new GridLayout(9,2);
-//        painel.setLayout(gl);
-
-
         JLabel frase = new JLabel("Selecione o assento de sua preferencia: ");
         frase.setBorder(BorderFactory.createEmptyBorder(10,20,15,10));
         painel.add(frase);
 
-
-//        painel.setSize(350,350);
         painel.setBackground(Color.pink);
         JPanel painel1 = new JPanel();
 
@@ -43,7 +37,6 @@ public class Assento{
         gl.setVgap(3);
         gl.setHgap(3);
         painel1.setLayout(gl);
-//        painel1.setSize(60,350);
 
         ConexaoAssento assentos = new ConexaoAssento(bilhete,conexao);
         Integer[] ocupados = assentos.isOccupied();
@@ -52,16 +45,16 @@ public class Assento{
             System.out.println(ocupados[i]);
         }
 
-        for (int i =0; i<14;i++){
-            /**Tem que ter verificação dos assentos aqui, se está livre ou não*/
+        for (int i =0; i<14;i++){ //Por questões de gabiarra começa do 0, resolvo isso depois
             JButton botao = new JButton(""+i);
             botao.setBorder(BorderFactory.createEmptyBorder(6,20,6,20));
 
+            /**Verificação dos assentos, se está livre ou não*/
             if (ocupados[i]==i){
+                botao.setBackground(Color.RED); //Aparentemente isso não funciona junto com o setEnabled
                 botao.setEnabled(false);
-                botao.setBackground(Color.red);
             }else{
-                    botao.setBackground(Color.green);
+                botao.setBackground(Color.green);
                 }
             painel1.add(botao);
         }
@@ -71,6 +64,7 @@ public class Assento{
 //        painel.add(Box.createRigidArea(new Dimension(50,0)));
 //        painel.add(Box.createHorizontalGlue());
 
+        //Adiciona um espaço entre as fileiras
         painel.add(new Box.Filler(new Dimension(40,5),new Dimension(40,5),new Dimension(40,5)));
 
         JPanel painel2 = new JPanel();
@@ -79,15 +73,16 @@ public class Assento{
         gl2.setHgap(3);
         painel2.setLayout(gl2);
 
-
         for (int i =14; i<28;i++){
-            /**Tem que ter verificação dos assentos aqui, se está livre ou não*/
-            JButton botao = new JButton(""+i);
+            JButton botao = new JButton(""+(i+1));
             botao.setBorder(BorderFactory.createEmptyBorder(6,20,6,20));
+            //setAssento
 
+            /**Verificação dos assentos, se está livre ou não*/
             if (ocupados[i]==i){
+                botao.setBackground(Color.RED); //Aparentemente isso não funciona junto com o setEnabled
                 botao.setEnabled(false);
-                botao.setBackground(Color.red);
+                setAssento(i,"ocupado");
             }else{
                 botao.setBackground(Color.green);
             }
@@ -96,14 +91,16 @@ public class Assento{
 
         painel.add(painel2, BorderLayout.WEST);
 
-
         //Colocar um if aqui para se caso usuario ja tiver escolhido seu banco
         JButton salvar = new JButton("Salvar");
         salvar.setBorder(BorderFactory.createEmptyBorder(10,45,10,45));
         painel.add(salvar, BorderLayout.SOUTH);
 
-
         return painel;
+    }
+
+    public void setAssento(int assento, String situacao){
+        //tem que colocar o enum aqui
     }
 
 //        painel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
