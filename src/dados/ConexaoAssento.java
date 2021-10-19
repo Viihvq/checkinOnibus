@@ -3,6 +3,10 @@ package dados;
 import entidades.Bilhete;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ConexaoAssento {
     /*
@@ -40,9 +44,14 @@ public class ConexaoAssento {
 
     public void cadastroAssento(Integer selecionado, String codigo) throws SQLException {
         PreparedStatement attAssento = conexao.prepareStatement("UPDATE \"public\".\"bilhete\" SET " +
-                " \"assento\" = ? WHERE \"codigo\" = ?;");
+                " \"assento\" = ?, \"assento_marcado_em\" = ? WHERE \"codigo\" = ?;");
         attAssento.setInt(1, selecionado);
-        attAssento.setString(2,codigo);
+
+        Timestamp hrMarcacao = new Timestamp(System.currentTimeMillis());
+        bilhete.setAssento_marcado_em(hrMarcacao);
+        System.out.println(hrMarcacao);
+        attAssento.setTimestamp(2, bilhete.getAssento_marcado_em()); //passei a retornar em Bilhete como time.sql pq o codigo sugeriu isso
+        attAssento.setString(3,codigo);
 
         attAssento.execute();
 

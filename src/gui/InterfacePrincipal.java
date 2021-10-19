@@ -72,6 +72,7 @@ public class InterfacePrincipal extends  JFrame{
                     exibe("inicial");
                 }else if(telaAssento.getAssentoSelecionado() != null && bilheteInfosBanco.getAssento() == null){
                     telaAssento.getConexaoAssentos().cadastroAssento(telaAssento.getAssentoSelecionado(), bilheteInfosBanco.getCodigo());
+
                     JOptionPane.showMessageDialog(null,"CHECK IN REALIZADO COM SUCESSO!");
                     exibe("inicial");
                 }else{

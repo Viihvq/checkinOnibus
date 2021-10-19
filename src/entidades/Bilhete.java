@@ -1,5 +1,7 @@
 package entidades;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 public class Bilhete {
@@ -7,7 +9,7 @@ public class Bilhete {
     private String assento;
     private Passageiro passageiro;
     private Linha linha;
-    private LocalDate assento_marcado_em;
+    private Timestamp assento_marcado_em;
 
     public String getCodigo() {
         return codigo;
@@ -41,11 +43,11 @@ public class Bilhete {
         this.linha = id_linha;
     }
 
-    public LocalDate getAssento_marcado_em() {
+    public Timestamp getAssento_marcado_em() {
         return assento_marcado_em;
     }
 
-    public void setAssento_marcado_em(LocalDate assento_marcado_em) {
+    public void setAssento_marcado_em(Timestamp assento_marcado_em) {
         this.assento_marcado_em = assento_marcado_em;
     }
 
