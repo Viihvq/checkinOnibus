@@ -78,7 +78,7 @@ public class InterfacePrincipal extends  JFrame{
                     JOptionPane.showMessageDialog(null,"ESCOLHA UMA OPÇÃO");
                 }
             }catch (Exception e){ //TESTAR TEM INTERNET. D10 E D11 ISSO
-                JOptionPane.showMessageDialog(null,"ERRO INESPERADO","ERROR",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,"ERRO \nFAVOR TENTAR NOVAMENTE!","ERROR",JOptionPane.ERROR_MESSAGE);
             }
 
         });

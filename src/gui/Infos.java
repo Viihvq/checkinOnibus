@@ -65,7 +65,7 @@ public class Infos {
         DateFormat HrPC = new SimpleDateFormat("HH:mm:ss");
         Date date = new Date();
 
-        JLabel lblHrAtualPC = new JLabel(HrPC.format(date));
+        JLabel lblHrAtualPC = new JLabel(HrPC.format(date)); //DATA ATUAL DO COMPUTADOR
         informacoes.add(lblHrAtualPC);
 
         JLabel lblNome = new JLabel("Nome: ");
