@@ -17,12 +17,15 @@ public class Assento{
     private ConexaoAssento conexaoAssentos;
     private Bilhete bilhete;
     private Integer[] ocupados;
-
+    private Boolean jaRodouAntes = false;
+    private int rodo = 0;
     public Assento(){}
 
     public JPanel criaJPanelAssento(Bilhete bilhete, Connection conexao) throws SQLException {
         JPanel painel = new JPanel();
 
+        rodo++;
+        System.out.println(rodo);
         JLabel frase = new JLabel("Selecione o assento de sua preferência");
         frase.setFont(new Font("Lucida Grande", Font.TRUETYPE_FONT, 15));
         frase.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -54,11 +57,15 @@ public class Assento{
             if (ocupados[i]==i){
                 botao.setBackground(Color.RED); //Aparentemente isso não funciona junto com o setEnabled
                 botao.setEnabled(false); //
-                listaBotoes.add(botao);
+                if(!jaRodouAntes){//MUDANÇA NESSES IF
+                    listaBotoes.add(botao);
+                }
 //                setAssento(i,"ocupado"); MUDANÇA AQUI
             }else{
                 botao.setBackground(Color.green); //
-                listaBotoes.add(botao);
+                if (!jaRodouAntes){
+                    listaBotoes.add(botao);
+                }
 //                setAssento(i,"livre"); MUDANÇA AQUI
                 }
             painelEsquerda.add(botao);
@@ -89,11 +96,15 @@ public class Assento{
                 /*Essas duas linhas de cima ficam redundantem com o setAssento, mas se eu não
                   deixá-las dá prolema nos assentos quando clico em salvar e faço o processo todo de novo
                  */
-                listaBotoes.add(botao);
+                if(!jaRodouAntes){
+                    listaBotoes.add(botao);
+                }
 //                setAssento(i,"ocupado"); MUDANÇA AQUI
             }else{
                 botao.setBackground(Color.green); //
-                listaBotoes.add(botao);
+                if(!jaRodouAntes){
+                    listaBotoes.add(botao);
+                }
 //                setAssento(i,"livre"); MUDANÇA AQUI
             }
             painelDireita.add(botao);
@@ -106,7 +117,7 @@ public class Assento{
         salvar.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
         painel.add(salvar, BorderLayout.SOUTH);
 
-
+        jaRodouAntes = true;
         return painel;
     }
 
@@ -150,4 +161,11 @@ public class Assento{
         this.conexaoAssentos = conexaoAssentos;
     }
 
+    public ArrayList<JButton> getListaBotoes() {
+        return listaBotoes;
+    }
+
+    public void setListaBotoes(ArrayList<JButton> listaBotoes) {
+        this.listaBotoes = listaBotoes;
+    }
 }
