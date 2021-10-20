@@ -41,8 +41,11 @@ public class Assento{
 
         conexaoAssentos = new ConexaoAssento(bilhete,conexao);
         ocupados = conexaoAssentos.isOccupied();
+        listaBotoes.add(new JButton("Numero 0")); //Evita problema nos botões: aperta ume  vai o anterior.
 
-        for (int i =0; i<14;i++){ //Por questões de gabiarra começa do 0, resolvo isso depois
+//        for (int i =0; i<14;i++){ //Por questões de gabiarra começa do 0, resolvo isso depois
+
+        for(int i = 1; i<=14; i++){ //MUDANÇA AQUI
             JButton botao = new JButton(""+i);
             botao.addActionListener(cliqueAssentoSelecionado);
             botao.setBorder(BorderFactory.createEmptyBorder(6,20,6,20));
@@ -52,11 +55,11 @@ public class Assento{
                 botao.setBackground(Color.RED); //Aparentemente isso não funciona junto com o setEnabled
                 botao.setEnabled(false); //
                 listaBotoes.add(botao);
-                setAssento(i,"ocupado");
+//                setAssento(i,"ocupado"); MUDANÇA AQUI
             }else{
                 botao.setBackground(Color.green); //
                 listaBotoes.add(botao);
-                setAssento(i,"livre");
+//                setAssento(i,"livre"); MUDANÇA AQUI
                 }
             painelEsquerda.add(botao);
         }
@@ -73,7 +76,8 @@ public class Assento{
         gl2.setHgap(3);
         painelDireita.setLayout(gl2);
 
-        for (int i =14; i<28;i++){
+//        for (int i =14; i<28;i++){
+        for(int i = 15; i<=28; i++){ //MUDANÇA AQUI
             JButton botao = new JButton(""+i);
             botao.addActionListener(cliqueAssentoSelecionado);
             botao.setBorder(BorderFactory.createEmptyBorder(6,20,6,20));
@@ -86,11 +90,11 @@ public class Assento{
                   deixá-las dá prolema nos assentos quando clico em salvar e faço o processo todo de novo
                  */
                 listaBotoes.add(botao);
-                setAssento(i,"ocupado");
+//                setAssento(i,"ocupado"); MUDANÇA AQUI
             }else{
                 botao.setBackground(Color.green); //
                 listaBotoes.add(botao);
-                setAssento(i,"livre");
+//                setAssento(i,"livre"); MUDANÇA AQUI
             }
             painelDireita.add(botao);
         }
@@ -114,7 +118,8 @@ public class Assento{
         if(assentoSelecionado != null){ //se tem um assento já marcado, ele volta para livre
             setAssento(assentoSelecionado,"livre");
         }
-        assentoSelecionado = listaBotoes.indexOf(e.getSource());
+        assentoSelecionado = listaBotoes.indexOf(e.getSource()); //PROBLEMA DOS BOTOES POSSIVELMENTE TA AQUI
+        System.out.println("O ASSENTO SELECIONADO É: "+assentoSelecionado+"  "+listaBotoes.indexOf(e.getSource()));
         setAssento(assentoSelecionado, "selecionado");
     };
 

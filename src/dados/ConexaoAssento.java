@@ -65,10 +65,10 @@ public class ConexaoAssento {
         comandoAssento.execute();
         ResultSet rs = comandoAssento.getResultSet();
 
-        Integer[] ocupado = new Integer[28];
+        Integer[] ocupado = new Integer[29]; //MUDANÇA AQUI
         int count =0;
 
-        for (int i=0; i<28;i++){ //Pra não dar problema com nulo
+        for (int i=0; i<29;i++){ //Pra não dar problema com nulo MUDANÇA AQUI
             ocupado[i] = -1;
         }
 
