@@ -2,16 +2,11 @@ package gui;
 
 import dados.ConexaoInfos;
 import entidades.Bilhete;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.SQLException;
 
 public class EditaInfos {
-    JFrame frame = new JFrame();
     JButton salvar = new JButton("Salvar");
     JButton voltar = new JButton("Voltar");
     JTextField editaCpf;// = new JTextField();
@@ -20,7 +15,7 @@ public class EditaInfos {
 
     public EditaInfos(){}
     //resolver esse segundo argumento<<<<<<<<<<<<<<<<<<<<<
-    public JPanel criaJPanelEditaInfos(Bilhete bilhete, ConexaoInfos conexaoInfos) throws SQLException {
+    public JPanel criaJPanelEditaInfos(Bilhete bilhete, ConexaoInfos conexaoInfos){
         JPanel geral = new JPanel();
 
         JLabel titulo = new JLabel("EDIÇÃO DOS DADOS");
@@ -62,16 +57,11 @@ public class EditaInfos {
         JPanel opcoes = new JPanel();
         opcoes.setBorder(BorderFactory.createEmptyBorder(10,20,78,20));
 
-//        opcoes.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
-
-
-//        salvar.addActionListener(al); SE DER PROBLEMA PODE SER AQUI QUE COMENTEI
         salvar.setBorder(BorderFactory.createEmptyBorder(15,40,15,40));
         salvar.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
         salvar.setBackground(new Color(238, 247, 246));
         opcoes.add(salvar);
 
-//        voltar.addActionListener(al);
         voltar.setBorder(BorderFactory.createEmptyBorder(15,40,15,40));
         voltar.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
         voltar.setBackground(new Color(238, 247, 246));
@@ -95,33 +85,4 @@ public class EditaInfos {
     public JButton getBtVoltar(){
         return voltar;
     }
-
-//    ActionListener al = new ActionListener() {
-//        @Override
-//        public void actionPerformed(ActionEvent e) {
-//
-//        }
-//    };
-
-//    public void frameSettings(){ //Método que seta tamanho, posição, fechamento do frame
-//        frame.addComponentListener(new ComponentAdapter() {
-//            public void componentMoved(ComponentEvent e) {
-//                frame.setEnabled(false);
-//                frame.setEnabled(true);
-//            }
-//        });
-//
-//        frame.setSize(350,350);
-//        frame.setTitle("Edição");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setLocationRelativeTo(null);
-//        frame.setResizable(false); //Teoricamente impede mudança no tamanho da janela
-//        frame.setVisible(true);
-//    }
-
-//    public static void main(String[] args) throws SQLException {
-//        Connection conexao = DriverManager.getConnection("jdbc:postgresql://134.209.243.185:5432/vavatur",
-//                "vavatur", "gGgLqu");
-//        new EditaInfos(conexao);
-//    }
 }

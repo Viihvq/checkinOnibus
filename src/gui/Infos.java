@@ -8,27 +8,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Infos {
-//    JFrame frame = new JFrame();
     JButton btAtt = new JButton("Atualizar Dados");
     JButton btProx = new JButton("Próximo");
-//    Connection conexaoBanco;
     Bilhete bilhete;
 
     public Infos(){
 //        criaJPanelInfos(bilhete);
     }
     public JPanel criaJPanelInfos(Bilhete bilhete){
-//        this.conexaoBanco = conexaoBanco;
         this.bilhete = bilhete;
 
         JPanel informacoes = new JPanel();
         informacoes.setBackground(new Color(184, 249, 244));
 
-        JPanel panelInfo = new JPanel(); //JOGA INFO E BOTOES PRA CA
+        JPanel panelInfo = new JPanel();
 
         JLabel titulo = new JLabel(" DADOS ATUAIS DO BILHETE ");
         titulo.setFont(new Font("Lucida Grande", Font.BOLD, 12));
@@ -103,16 +99,10 @@ public class Infos {
         btProx.setBackground(new Color(238, 247, 246));
         informacoes.add(btProx);
 
-        //TIRA ISSO DEPOIS DOS TESTES
-//        frame.getContentPane().add(informacoes, BorderLayout.NORTH); //Posicionamento em cima
-//        frame.getContentPane().add(botoes, BorderLayout.SOUTH); //Posicionamento embaixo
-//        //
-
         panelInfo.add(informacoes, BorderLayout.NORTH); //DESCOMENTAR DEPOIS
         panelInfo.setBackground(new Color(184, 249, 244));
 //        teste.add(botoes, BorderLayout.SOUTH);
 
-//        frameSettings();
         return panelInfo;
     }
 
@@ -133,31 +123,8 @@ public class Infos {
                 new EditaInfos();
             } else if (e.getSource() == btProx) {
                 System.out.println("BÃO");
-
             }
-
-//            frame.dispose(); //Fecha o frame
         }
     };
 
-//    public void frameSettings(){ //Método que seta tamanho, posição, fechamento do frame
-////        frame.addComponentListener(new ComponentAdapter() {
-////            public void componentMoved(ComponentEvent e) {
-////                frame.setEnabled(false);
-////                frame.setEnabled(true);
-////            }
-////        });
-//
-//        frame.setSize(350,350);
-//        frame.setTitle("Informações");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setLocationRelativeTo(null);
-//        frame.setResizable(false); //Teoricamente impede mudança no tamanho da janela
-//        frame.setVisible(true);
-//    }
-
-//    public static void main(String[] args) {
-//        Infos i = new Infos();
-////        i.criaJPanelInfos();
-//    }
 }

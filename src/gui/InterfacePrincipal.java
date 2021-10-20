@@ -11,7 +11,6 @@ import java.sql.SQLException;
 
 public class InterfacePrincipal extends  JFrame{
     private Connection conexaoBanco;
-
     private JPanel cardPanel = new JPanel();
     private CardLayout cardLayout = new CardLayout();
     private Home telaInicial;
@@ -19,11 +18,10 @@ public class InterfacePrincipal extends  JFrame{
     private Infos telaInfos;
     private EditaInfos telaEditaInfos;
     private Assento telaAssento;
-    private JButton btcheck;
     private Bilhete bilheteInfosBanco = new Bilhete();
     private ConexaoInfos conexaoInfos;
 
-    public InterfacePrincipal(Connection conexao) throws SQLException {
+    public InterfacePrincipal(Connection conexao){
         conexaoBanco = conexao; //Recebe os dados do BD
 
         cardPanel.setLayout(cardLayout);
@@ -56,8 +54,8 @@ public class InterfacePrincipal extends  JFrame{
         setTitle("Checking");
 
         setSize(350,350);
-        setResizable(false);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Programa para derodar ao clicar no X
+        setResizable(false); //Impede a mudança do tamanho da janela
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Programa para de rodar ao clicar no X
         setLocationRelativeTo(null); //Tela centralizada
         setVisible(true);
     }
@@ -79,7 +77,7 @@ public class InterfacePrincipal extends  JFrame{
                     JOptionPane.showMessageDialog(null,"ESCOLHA UMA OPÇÃO");
                 }
             }catch (Exception e){ //TESTAR TEM INTERNET. D10 E D11 ISSO
-                JOptionPane.showMessageDialog(null,"ERRO \nFAVOR TENTAR NOVAMENTE!","ERROR",JOptionPane.ERROR_MESSAGE);
+//                JOptionPane.showMessageDialog(null,"ERRO \nFAVOR TENTAR NOVAMENTE!","ERROR",JOptionPane.ERROR_MESSAGE);
             }
 
         });
@@ -92,7 +90,7 @@ public class InterfacePrincipal extends  JFrame{
                                               telaEditaInfos.editaNome.getText(),
                                               telaEditaInfos.editaCpf.getText());
                 bilheteInfosBanco = conexaoInfos.getInfosBanco(bilheteInfosBanco.getCodigo());
-                this.cardLayout.removeLayoutComponent(getTelaInfos()); //Se não remover, não retorna com as informações nova
+                this.cardLayout.removeLayoutComponent(getTelaInfos()); //Se não remover, não retorna com as informações novas
                 add(getTelaInfos(), "infos"); //Adiciona de novo para aparecer as informações atualizadas
                 System.out.println("Debug AL salvar");
                 exibe("infos");
@@ -108,16 +106,16 @@ public class InterfacePrincipal extends  JFrame{
         });
     }
 
-    private void botoesInfo(){ //Botoes Atualizar infos e próximo da tela Informações
+    private void botoesInfo(){ //Botoes Atualizar infos e Próximo da tela Informações
         telaInfos.getBtAtt().addActionListener((al) -> {
 
-            try { //pediu trycatch dps de colocar o .conexao no getattinfos
-                add(getTelaEditaInfos(), "edita infos"); /**/
+            try {
+                add(getTelaEditaInfos(), "edita infos");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
-            exibe("edita infos");/**/
+            exibe("edita infos");
             setTitle("Edição de dados");
         });
 
@@ -129,7 +127,7 @@ public class InterfacePrincipal extends  JFrame{
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            exibe("assento"); //AINDA NAO FIZ
+            exibe("assento");
             setTitle("Assentos");
         });
     }
@@ -157,7 +155,6 @@ public class InterfacePrincipal extends  JFrame{
                 e.printStackTrace();
             }
         });
-
     }
 
     private void botaoInicial(){
@@ -172,24 +169,17 @@ public class InterfacePrincipal extends  JFrame{
     }
 
     private JPanel getTelaInicial() {
-        telaInicial = new Home(); //instancio para conseguir acessar o método hometeste(), se eu fizesse no construtor
+//        telaInicial = new Home(); //instancio para conseguir acessar o método criaJpanelHome(), se eu fizesse no construtor
         //nao conseguiria retornar pq o retorno seria o nome da classe, nao um jpanel que é o que quero
         return telaInicial.criaJPanelHome();
     }
 
     private JPanel getSolicitaCod(){
-        telaSolicitaCod = new SolicitaCod();
+//        telaSolicitaCod = new SolicitaCod();
         return telaSolicitaCod.criaJPanelSolicita();
     }
 
-    private JPanel getTelaInfos() /*throws SQLException*/ {
-//        telaInfos = new Infos();
-//        ConexaoInfos ci = new ConexaoInfos(conexaoBanco);
-//        COLOCAR ESSE BILHETE NO BOTAOSOLICITACOD
-//        Bilhete bilheteInfosBanco = new ConexaoInfos(conexaoBanco).getInfosBanco(telaSolicitaCod.txtSolicita.getText());
-//                ci.getInfosBanco(telaSolicitaCod.txtSolicita.getText()); //acho que posso criar aqui direto e tirar de lá de cima
-        //pega o código da telaSolicita, manda para o metodo do conexaoInfo e ele retorna um array com informações para o telaInfos
-
+    private JPanel getTelaInfos(){
         return telaInfos.criaJPanelInfos(bilheteInfosBanco); //O bilheteInfosBanco foi preenchido no metodo botaoSolicitaCodigo
     }
 

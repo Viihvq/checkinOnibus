@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
 
 public class Home{
     JButton btcheck;
@@ -17,26 +16,17 @@ public class Home{
 
 
         checkingPanel = new JPanel(); //home
-        checkingPanel.setLayout(null);/**/
+        checkingPanel.setLayout(null);
         checkingPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 
         btcheck = new JButton("Realizar checking");
-//        btcheck.setBounds(25,25,25,25);
-        btcheck.setBounds(67, 112, 200, 60);/**/
-        btcheck.setFont(new Font("Lucida Grande", Font.PLAIN, 14)); /**/
+        btcheck.setBounds(67, 112, 200, 60);
+        btcheck.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
         btcheck.setBackground(new Color(238, 247, 246));
 
 
-//        btcheck.addActionListener(al); //lê o clique do botão
-//        btcheck.addActionListener((al) -> {
-//            System.out.println("teste 123");
-//        });
-
         checkingPanel.add(btcheck);
         checkingPanel.setBackground(new Color(184, 249, 244));
-
-//        frame.getContentPane().add(checkingPanel);
-//        frameSettings();
 
         getBotaoHome();
 
