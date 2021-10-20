@@ -49,7 +49,8 @@ public class ConexaoAssento {
 
         Timestamp hrMarcacao = new Timestamp(System.currentTimeMillis());
         bilhete.setAssento_marcado_em(hrMarcacao);
-        System.out.println(hrMarcacao);
+        System.out.println(hrMarcacao); //DEBUG
+
         attAssento.setTimestamp(2, bilhete.getAssento_marcado_em()); //passei a retornar em Bilhete como time.sql pq o codigo sugeriu isso
         attAssento.setString(3,codigo);
 

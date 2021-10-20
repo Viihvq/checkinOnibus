@@ -2,24 +2,15 @@ package gui;
 
 import dados.ConexaoAssento;
 import entidades.Bilhete;
-import org.postgresql.shaded.com.ongres.scram.common.bouncycastle.pbkdf2.Pack;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Assento{
-//    List<JButton> bancos = new ArrayList<>();
-//    char[][] fileiras = new char[6][6];
-////    JFrame frame = new JFrame();
-//    boolean teste = false;
-//    int linhaSelecionada;
-//    int colunaSelecionada;
     private ArrayList<JButton> listaBotoes = new ArrayList<>();
     private JButton salvar = new JButton("Salvar");
     private Integer assentoSelecionado = null;
@@ -32,29 +23,25 @@ public class Assento{
     public JPanel criaJPanelAssento(Bilhete bilhete, Connection conexao) throws SQLException {
         JPanel painel = new JPanel();
 
-        JLabel frase = new JLabel("Selecione o assento de sua preferencia: ");
-        frase.setBorder(BorderFactory.createEmptyBorder(10,20,15,10));
+        JLabel frase = new JLabel("Selecione o assento de sua preferência");
+        frase.setFont(new Font("Lucida Grande", Font.TRUETYPE_FONT, 15));
+        frase.setBackground(new Color(94, 232, 230));
+        frase.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         painel.add(frase);
 
-        painel.setBackground(Color.pink);
-        JPanel painel1 = new JPanel();
+        painel.setBackground(new Color(184, 249, 244));
 
-        painel1.setBackground(Color.yellow);
+        JPanel painelEsquerda = new JPanel();
+        painelEsquerda.setBackground(new Color(94, 232, 230));
         GridLayout gl = new GridLayout(7,2);
         gl.setVgap(3);
         gl.setHgap(3);
-        painel1.setLayout(gl);
+        painelEsquerda.setLayout(gl);
 
         this.bilhete = bilhete;
 
-        /*ConexaoAssento*/ conexaoAssentos = new ConexaoAssento(bilhete,conexao);
-
+        conexaoAssentos = new ConexaoAssento(bilhete,conexao);
         ocupados = conexaoAssentos.isOccupied();
-
-
-//        for (int i=0;i<ocupados.length;i++){
-//            System.out.println(ocupados[i]);
-//        }
 
         for (int i =0; i<14;i++){ //Por questões de gabiarra começa do 0, resolvo isso depois
             JButton botao = new JButton(""+i);
@@ -72,19 +59,20 @@ public class Assento{
                 listaBotoes.add(botao);
                 setAssento(i,"livre");
                 }
-            painel1.add(botao);
+            painelEsquerda.add(botao);
         }
 
-        painel.add(painel1, BorderLayout.EAST);
+        painel.add(painelEsquerda, BorderLayout.EAST);
 
         //Adiciona um espaço entre as fileiras
         painel.add(new Box.Filler(new Dimension(40,5),new Dimension(40,5),new Dimension(40,5)));
 
-        JPanel painel2 = new JPanel();
+        JPanel painelDireita = new JPanel();
+        painelDireita.setBackground(new Color(184, 249, 244));
         GridLayout gl2 = new GridLayout(7,2);
         gl2.setVgap(3);
         gl2.setHgap(3);
-        painel2.setLayout(gl2);
+        painelDireita.setLayout(gl2);
 
         for (int i =14; i<28;i++){
             JButton botao = new JButton(""+i);
@@ -105,12 +93,14 @@ public class Assento{
                 listaBotoes.add(botao);
                 setAssento(i,"livre");
             }
-            painel2.add(botao);
+            painelDireita.add(botao);
         }
 
-        painel.add(painel2, BorderLayout.WEST);
+        painel.add(painelDireita, BorderLayout.WEST);
 
         salvar.setBorder(BorderFactory.createEmptyBorder(10,45,10,45));
+        salvar.setBackground(new Color(238, 247, 246));
+        salvar.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
         painel.add(salvar, BorderLayout.SOUTH);
 
 

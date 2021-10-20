@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Infos {
-    JFrame frame = new JFrame();
-    JButton btAtt = new JButton("Atualizar informações");
+//    JFrame frame = new JFrame();
+    JButton btAtt = new JButton("Atualizar Dados");
     JButton btProx = new JButton("Próximo");
 //    Connection conexaoBanco;
     Bilhete bilhete;
@@ -26,67 +26,81 @@ public class Infos {
         this.bilhete = bilhete;
 
         JPanel informacoes = new JPanel();
+        informacoes.setBackground(new Color(184, 249, 244));
 
-        JPanel teste = new JPanel(); //JOGA INFO E BOTOES PRA CA
+        JPanel panelInfo = new JPanel(); //JOGA INFO E BOTOES PRA CA
 
-        GridLayout l = new GridLayout(8,2);
-        l.setHgap(10);
-        l.setVgap(10);
+        JLabel titulo = new JLabel(" DADOS ATUAIS DO BILHETE ");
+        titulo.setFont(new Font("Lucida Grande", Font.BOLD, 12));
+        titulo.setBorder(BorderFactory.createEmptyBorder(7,10,3,10));
+        panelInfo.add(titulo);
+
+        GridLayout l = new GridLayout(10,2);
+        l.setHgap(5);
+        l.setVgap(5);
         informacoes.setLayout(l);
 
-        JLabel lblOrigem = new JLabel("Origem: ");
+
+        JLabel lblNome = new JLabel("         Nome:");
+        informacoes.add(lblNome, Component.CENTER_ALIGNMENT);
+
+        JLabel lblNomeBanco = new JLabel(" "+bilhete.getPassageiro().getNome());
+        informacoes.add(lblNomeBanco);
+
+        JLabel lblCpf = new JLabel("         CPF:");
+        informacoes.add(lblCpf);
+
+        JLabel lblCpfBanco = new JLabel(" "+bilhete.getPassageiro().getCpf());
+        informacoes.add(lblCpfBanco);
+
+        JLabel lblOrigem = new JLabel("         Origem:");
         informacoes.add(lblOrigem);
 
         JLabel lblOrigemBanco = new JLabel(bilhete.getLinha().getOrigem());
-        System.out.println(bilhete.getCodigo() + "aaaaaaa testando\n");
+//        System.out.println(bilhete.getCodigo() + "aaaaaaa testando\n");
         informacoes.add(lblOrigemBanco);
 
-        JLabel lblDestino = new JLabel("Destino: ");
+        JLabel lblDestino = new JLabel("         Destino:");
         informacoes.add(lblDestino);
 
-        JLabel lblDestinoBanco = new JLabel(bilhete.getLinha().getDestino());
+        JLabel lblDestinoBanco = new JLabel(" "+bilhete.getLinha().getDestino());
         informacoes.add(lblDestinoBanco);
 
-        JLabel lblEmbarque = new JLabel("Embarque: ");
+        JLabel lblEmbarque = new JLabel("         Embarque:");
         informacoes.add(lblEmbarque);
 
-        JLabel lblEmbarqueBanco = new JLabel(String.valueOf(bilhete.getLinha().getHora_embarque()));
+        JLabel lblEmbarqueBanco = new JLabel(" "+String.valueOf(bilhete.getLinha().getHora_embarque()));
         informacoes.add(lblEmbarqueBanco);
 
-        JLabel lblPartida = new JLabel("Partida: ");
+        JLabel lblPartida = new JLabel("         Partida:");
         informacoes.add(lblPartida);
 
-        JLabel lblPartidaBanco = new JLabel(String.valueOf(bilhete.getLinha().getHora_partida()));
+        JLabel lblPartidaBanco = new JLabel(" "+String.valueOf(bilhete.getLinha().getHora_partida()));
         informacoes.add(lblPartidaBanco);
 
-        JLabel lblHrAtual = new JLabel("Hora atual");
+        JLabel lblHrAtual = new JLabel("         Hora atual:");
         informacoes.add(lblHrAtual);
 
         DateFormat HrPC = new SimpleDateFormat("HH:mm:ss");
         Date date = new Date();
 
-        JLabel lblHrAtualPC = new JLabel(HrPC.format(date)); //DATA ATUAL DO COMPUTADOR
+        JLabel lblHrAtualPC = new JLabel(" "+HrPC.format(date)); //DATA ATUAL DO COMPUTADOR
         informacoes.add(lblHrAtualPC);
 
-        JLabel lblNome = new JLabel("Nome: ");
-        informacoes.add(lblNome);
-
-        JLabel lblNomeBanco = new JLabel(bilhete.getPassageiro().getNome());
-        informacoes.add(lblNomeBanco);
-
-        JLabel lblCpf = new JLabel("CPF: ");
-        informacoes.add(lblCpf);
-
-        JLabel lblCpfBanco = new JLabel(bilhete.getPassageiro().getCpf());
-        informacoes.add(lblCpfBanco);
 
 //        JPanel botoes = new JPanel();
 
 
         btAtt.addActionListener(al); //"Escuta" quando o botão é clicado
+        btAtt.setBorder(BorderFactory.createEmptyBorder(6,15,5,15));
+        btAtt.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
+        btAtt.setBackground(new Color(238, 247, 246));
         informacoes.add(btAtt);
 
         btProx.addActionListener(al); //"Escuta" quando o botão é clicado
+        btProx.setBorder(BorderFactory.createEmptyBorder(6,15,5,15));
+        btProx.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
+        btProx.setBackground(new Color(238, 247, 246));
         informacoes.add(btProx);
 
         //TIRA ISSO DEPOIS DOS TESTES
@@ -94,11 +108,12 @@ public class Infos {
 //        frame.getContentPane().add(botoes, BorderLayout.SOUTH); //Posicionamento embaixo
 //        //
 
-        teste.add(informacoes, BorderLayout.NORTH); //DESCOMENTAR DEPOIS
+        panelInfo.add(informacoes, BorderLayout.NORTH); //DESCOMENTAR DEPOIS
+        panelInfo.setBackground(new Color(184, 249, 244));
 //        teste.add(botoes, BorderLayout.SOUTH);
 
 //        frameSettings();
-        return teste;
+        return panelInfo;
     }
 
     public JButton getBtAtt(){
