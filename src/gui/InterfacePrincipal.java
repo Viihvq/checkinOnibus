@@ -70,7 +70,7 @@ public class InterfacePrincipal extends  JFrame{
                     exibe("inicial");
                 }else if(telaAssento.getAssentoSelecionado() != null && bilheteInfosBanco.getAssento() == null){
                     telaAssento.getConexaoAssentos().cadastroAssento(telaAssento.getAssentoSelecionado(), bilheteInfosBanco.getCodigo());
-                    telaAssento.getListaBotoes().clear(); //LIMPA O ARRAY
+
                     /*
                     LIMPA O ARRAY? LIMPA. MAS ISSO SIGNIFICA QUE EU PERCO OS STATUS ATUALIZADO DOS BOTOES:
                     POR EXEMPLO, MARQUEI O ASSENTO E FOI SALVO, RODO DE NOVO E O BOTAO QUE EU SELECIONEI ANTES AINDA
@@ -81,7 +81,6 @@ public class InterfacePrincipal extends  JFrame{
                     SEU BANCO PRA DEPOIS APARECER O JOPTIONPANE.
                      */
 
-
                     JOptionPane.showMessageDialog(null,"CHECK IN REALIZADO COM SUCESSO!");
                     exibe("inicial");
                 }else{
@@ -90,7 +89,7 @@ public class InterfacePrincipal extends  JFrame{
             }catch (Exception e){ //TESTAR TEM INTERNET. D10 E D11 ISSO
 //                JOptionPane.showMessageDialog(null,"ERRO \nFAVOR TENTAR NOVAMENTE!","ERROR",JOptionPane.ERROR_MESSAGE);
             }
-
+            telaAssento.getListaBotoes().clear(); //LIMPA O ARRAY
         });
     }
 

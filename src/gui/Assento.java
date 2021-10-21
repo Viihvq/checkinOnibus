@@ -11,30 +11,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Assento{
-    private ArrayList<JButton> listaBotoes = new ArrayList<>();
+    private ArrayList<JButton> listaBotoes = new ArrayList<>();//; MUDANÇA AQUI
     private JButton salvar = new JButton("Salvar");
     private Integer assentoSelecionado = null;
     private ConexaoAssento conexaoAssentos;
     private Bilhete bilhete;
     private Integer[] ocupados;
-    private Boolean jaRodouAntes = false;
-    private int rodo = 0;
+
     public Assento(){}
 
     public JPanel criaJPanelAssento(Bilhete bilhete, Connection conexao) throws SQLException {
         JPanel painel = new JPanel();
 
-        rodo++;
-        System.out.println(rodo);
         JLabel frase = new JLabel("Selecione o assento de sua preferência");
         frase.setFont(new Font("Lucida Grande", Font.TRUETYPE_FONT, 15));
         frase.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        painel.add(frase);
 
+        painel.add(frase);
         painel.setBackground(new Color(184, 249, 244));
 
         JPanel painelEsquerda = new JPanel();
         painelEsquerda.setBackground(new Color(94, 232, 230));
+
         GridLayout gl = new GridLayout(7,2);
         gl.setVgap(3);
         gl.setHgap(3);
@@ -44,6 +42,7 @@ public class Assento{
 
         conexaoAssentos = new ConexaoAssento(bilhete,conexao);
         ocupados = conexaoAssentos.isOccupied();
+//        listaBotoes = new ArrayList<>();//MUDANÇA AQUI TESTE SE ISSO RESOLVE
         listaBotoes.add(new JButton("Numero 0")); //Evita problema nos botões: aperta ume  vai o anterior.
 
 //        for (int i =0; i<14;i++){ //Por questões de gabiarra começa do 0, resolvo isso depois
@@ -56,20 +55,17 @@ public class Assento{
             /**Verificação dos assentos, se está livre ou não*/
             if (ocupados[i]==i){
                 botao.setBackground(Color.RED); //Aparentemente isso não funciona junto com o setEnabled
-                botao.setEnabled(false); //
-                if(!jaRodouAntes){//MUDANÇA NESSES IF
-                    listaBotoes.add(botao);
-                }
-//                setAssento(i,"ocupado"); MUDANÇA AQUI
+                botao.setEnabled(false);
+                listaBotoes.add(botao);
+                setAssento(i,"ocupado"); //MUDANÇA AQUI
             }else{
-                botao.setBackground(Color.green); //
-                if (!jaRodouAntes){
-                    listaBotoes.add(botao);
-                }
-//                setAssento(i,"livre"); MUDANÇA AQUI
-                }
+                botao.setBackground(Color.green);
+                listaBotoes.add(botao);
+                setAssento(i,"livre"); //MUDANÇA AQUI
+            }
             painelEsquerda.add(botao);
         }
+
 
         painel.add(painelEsquerda, BorderLayout.EAST);
 
@@ -78,6 +74,7 @@ public class Assento{
 
         JPanel painelDireita = new JPanel();
         painelDireita.setBackground(new Color(94, 232, 230));
+
         GridLayout gl2 = new GridLayout(7,2);
         gl2.setVgap(3);
         gl2.setHgap(3);
@@ -96,16 +93,12 @@ public class Assento{
                 /*Essas duas linhas de cima ficam redundantem com o setAssento, mas se eu não
                   deixá-las dá prolema nos assentos quando clico em salvar e faço o processo todo de novo
                  */
-                if(!jaRodouAntes){
-                    listaBotoes.add(botao);
-                }
-//                setAssento(i,"ocupado"); MUDANÇA AQUI
+                listaBotoes.add(botao);
+                setAssento(i,"ocupado"); //MUDANÇA AQUI
             }else{
                 botao.setBackground(Color.green); //
-                if(!jaRodouAntes){
-                    listaBotoes.add(botao);
-                }
-//                setAssento(i,"livre"); MUDANÇA AQUI
+                listaBotoes.add(botao);
+                setAssento(i,"livre"); //MUDANÇA AQUI
             }
             painelDireita.add(botao);
         }
@@ -117,7 +110,6 @@ public class Assento{
         salvar.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
         painel.add(salvar, BorderLayout.SOUTH);
 
-        jaRodouAntes = true;
         return painel;
     }
 
