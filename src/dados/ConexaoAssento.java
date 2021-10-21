@@ -9,29 +9,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class ConexaoAssento {
-    /*
-    * Brainstorm do Assento:
-    *  FEITO
-    *   -Verificar se o assento está nulo ou não
-    *       -não nulo: não deixa marcar novamente
-    *       -nulo: deixa marcar.
-    *   -Criação dos botões:
-    *       -Assento já marcado: fundo vermelho
-    *       -Assento livre: fundo verde
-
-    *   -Marcar um assento e pintar de verde;
-    *   -Marcar outra opção e desmarcar a marcada anteriormente
-    *
-    *   -Pegar o botão selecionado e jogar isso para o banco quando o
-    *    usuario clicar em 'salvar'.
-    *
-    *   BUGS:
-    *     -Tem um bug muito esquisito acontecendo: se eu tentar cadastrar um assento pela primeira vez rodando
-    * e depois tentar recadastrar, avisa bonitinho que já foi feito. Funciona 10! Porém, se
-    * eu quiser cadastrar um segundo assento, vai maneiro. Porém se eu entrar de novo nesse segundo (com o programa
-    * ainda rodando) ele dá erro aqui nessa classe. É como se o int valor recebesse/somasse/multiplicasse algum valor e aí da erro.
-    *
-    * */
 
     Connection conexao;
     Bilhete bilhete;

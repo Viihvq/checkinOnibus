@@ -1,31 +1,42 @@
 package gui;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class Home{
     JButton btcheck;
     JPanel checkingPanel;
 
+
     public Home(){
-        criaJPanelHome();
+        //criaJPanelHome();
     }
-    public JPanel criaJPanelHome() {
+    public JPanel criaJPanelHome() throws IOException {
 
 
         checkingPanel = new JPanel(); //home
-        checkingPanel.setLayout(null);
+//        checkingPanel.setLayout(null);
         checkingPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 
         btcheck = new JButton("Realizar checking");
         btcheck.setBounds(67, 112, 200, 60);
+//        btcheck.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
         btcheck.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
         btcheck.setBackground(new Color(238, 247, 246));
 
-
         checkingPanel.add(btcheck);
+        JLabel imagem = new JLabel();
+//        status.setBorder(BorderFactory.createLineBorder(Color.BLACK)); //Borda
+        imagem.setBounds(0, 0, 350, 310);
+        Image img = ImageIO.read(getClass().getClassLoader().getResourceAsStream("img.png")); //Permite abrir a imagem no jar
+        imagem.setIcon(new ImageIcon(img));
+        checkingPanel.add(imagem,Component.BOTTOM_ALIGNMENT);
+
         checkingPanel.setBackground(new Color(184, 249, 244));
 
         getBotaoHome();

@@ -12,7 +12,7 @@ public class Principal {
                 "vavatur", "gGgLqu");
     }
 
-    public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
+    public static void main(String[] args) throws Exception {
         Connection conexao = conexaoBanco();
         UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 

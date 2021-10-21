@@ -21,7 +21,7 @@ public class InterfacePrincipal extends  JFrame{
     private Bilhete bilheteInfosBanco = new Bilhete();
     private ConexaoInfos conexaoInfos;
 
-    public InterfacePrincipal(Connection conexao){
+    public InterfacePrincipal(Connection conexao) throws Exception {
         conexaoBanco = conexao; //Recebe os dados do BD
 
         cardPanel.setLayout(cardLayout);
@@ -70,16 +70,6 @@ public class InterfacePrincipal extends  JFrame{
                     exibe("inicial");
                 }else if(telaAssento.getAssentoSelecionado() != null && bilheteInfosBanco.getAssento() == null){
                     telaAssento.getConexaoAssentos().cadastroAssento(telaAssento.getAssentoSelecionado(), bilheteInfosBanco.getCodigo());
-
-                    /*
-                    LIMPA O ARRAY? LIMPA. MAS ISSO SIGNIFICA QUE EU PERCO OS STATUS ATUALIZADO DOS BOTOES:
-                    POR EXEMPLO, MARQUEI O ASSENTO E FOI SALVO, RODO DE NOVO E O BOTAO QUE EU SELECIONEI ANTES AINDA
-                    ESTÁ VERDE COMO SE TIVESSE DISPONIVEL. SE EU TENTO MARCAR OUTRO ASSENTO E ENVIAR DA A MENSAGEM
-                    QUE O ASSENTO JÁ FOI ESCOLHIDO, SÓ QUE NÃO APARECE!!!!!!!!
-                    COM A RESTRIÇÃO NO BOTAO, NA SEGUNDA CHAMADA DA PROBLEMA NO SETASSENTO.
-                    SENDO ASSIM, VAMOS TENTAR COLOCAR UM JOPTIONPANE AO INVES DE DEIXAR O USUARIO SELECIONAR
-                    SEU BANCO PRA DEPOIS APARECER O JOPTIONPANE.
-                     */
 
                     JOptionPane.showMessageDialog(null,"CHECK IN REALIZADO COM SUCESSO!");
                     exibe("inicial");
@@ -178,7 +168,7 @@ public class InterfacePrincipal extends  JFrame{
         this.cardLayout.show(this.cardPanel, nome);
     }
 
-    private JPanel getTelaInicial() {
+    private JPanel getTelaInicial() throws Exception {
 //        telaInicial = new Home(); //instancio para conseguir acessar o método criaJpanelHome(), se eu fizesse no construtor
         //nao conseguiria retornar pq o retorno seria o nome da classe, nao um jpanel que é o que quero
         return telaInicial.criaJPanelHome();
