@@ -86,8 +86,8 @@ public class InterfacePrincipal extends  JFrame{
                 }else{
                     JOptionPane.showMessageDialog(null,"ESCOLHA UMA OPÇÃO");
                 }
-            }catch (Exception e){ //TESTAR TEM INTERNET. D10 E D11 ISSO
-//                JOptionPane.showMessageDialog(null,"ERRO \nFAVOR TENTAR NOVAMENTE!","ERROR",JOptionPane.ERROR_MESSAGE);
+            }catch (Exception e){
+                JOptionPane.showMessageDialog(null,"ERRO \nFAVOR TENTAR NOVAMENTE!","ERROR",JOptionPane.ERROR_MESSAGE);
             }
             telaAssento.getListaBotoes().clear(); //LIMPA O ARRAY
         });
