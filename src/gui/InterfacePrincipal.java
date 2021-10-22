@@ -76,6 +76,7 @@ public class InterfacePrincipal extends  JFrame{
                 }
             }catch (Exception e){
                 JOptionPane.showMessageDialog(null,"ERRO \nFAVOR TENTAR NOVAMENTE!","ERROR",JOptionPane.ERROR_MESSAGE);
+                exibe("inicial");
             }
             telaAssento.getListaBotoes().clear(); //LIMPA O ARRAY AO FINAL
         });
