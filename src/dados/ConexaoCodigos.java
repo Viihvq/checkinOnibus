@@ -10,7 +10,6 @@ public class ConexaoCodigos {
         this.conexao = conexao;
     }
 
-
     public boolean codLocalizado(String cod) throws SQLException {
         PreparedStatement comandoListarCodigos = conexao.prepareStatement(LISTAR_CODIGOS);
         comandoListarCodigos.execute();
@@ -19,7 +18,7 @@ public class ConexaoCodigos {
         while (comandoResultadoCodigos.next()){
 
             if(comandoResultadoCodigos.getString(1).equals(cod)){
-                System.out.println("alo achou");
+                System.out.println("Código encontrado");
                 return true;
             }
         }
@@ -27,8 +26,4 @@ public class ConexaoCodigos {
         return false;
     }
 
-//    public static void main(String[] args) throws SQLException {
-//        new ConexaoCodigos(DriverManager.getConnection("jdbc:postgresql://134.209.243.185:5432/vavatur",
-//                "vavatur", "gGgLqu")).codLocalizado("BEBBIX");
-//    }
 }

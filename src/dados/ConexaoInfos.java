@@ -26,12 +26,11 @@ public class ConexaoInfos{
         attInfo.setString(2,nomePassageiro);
         attInfo.setLong(3,idPassageiro);
 
-        System.out.println("BEGUD DO GETATTINFOSBANCO");
+        System.out.println("Informações atualizadas");
 
         attInfo.execute();
 
-    } //essa classe só precisa att as informações, então creio que nao precise de retorno
-
+    } //essa classe só precisa att as informações, então nao precisa de retorno
 
     public Bilhete getInfosBanco(String codigo) throws SQLException {
 
@@ -43,11 +42,10 @@ public class ConexaoInfos{
         comandoListarInfos.execute();
         ResultSet rs = comandoListarInfos.getResultSet();
 
-
         while (rs.next()){
-            System.out.println(rs.getString(1)+rs.getString(2)+rs.getString(3)+rs.getString(4)+rs.getString(5));
+            System.out.println(rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3)+" "+rs.getString(4)+" "+rs.getString(5));
             bilhete.setCodigo(rs.getString(1));
-            bilhete.setAssento(rs.getString(2)); //se der merda o problema ta aqui
+            bilhete.setAssento(rs.getString(2));
             passageiro.setId(rs.getInt(3));
             passageiro.setNome(rs.getString(4));
             passageiro.setCpf(rs.getString(5));
@@ -59,13 +57,8 @@ public class ConexaoInfos{
             bilhete.setLinha(linha);
         }
 
-        System.out.println(codigo+"        --      "+bilhete);
+        System.out.println(bilhete);
 
         return bilhete;
     }
-
-//    public static void main(String[] args) throws SQLException {
-//        new ConexaoInfos(DriverManager.getConnection("jdbc:postgresql://134.209.243.185:5432/vavatur",
-//                "vavatur", "gGgLqu")).getInfosBanco("BEBBIX");
-//    }
 }

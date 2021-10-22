@@ -3,18 +3,13 @@ package dados;
 import entidades.Bilhete;
 
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class ConexaoAssento {
 
     Connection conexao;
     Bilhete bilhete;
-//    PreparedStatement comandoAssento;
 
-    public ConexaoAssento(Bilhete bilhete, Connection conexao) throws SQLException {
+    public ConexaoAssento(Bilhete bilhete, Connection conexao){
         this.conexao = conexao;
         this.bilhete = bilhete;
     }
@@ -26,14 +21,13 @@ public class ConexaoAssento {
 
         Timestamp hrMarcacao = new Timestamp(System.currentTimeMillis());
         bilhete.setAssento_marcado_em(hrMarcacao);
-        System.out.println(selecionado + "  "+hrMarcacao); //DEBUG
 
-        attAssento.setTimestamp(2, bilhete.getAssento_marcado_em()); //passei a retornar em Bilhete como time.sql pq o codigo sugeriu isso
+        attAssento.setTimestamp(2, bilhete.getAssento_marcado_em());
         attAssento.setString(3,codigo);
 
         attAssento.execute();
 
-        System.out.println("teste cadastroassento"+selecionado+codigo);
+        System.out.println("Cadastro assento: "+selecionado+", código: "+codigo+", hora: "+hrMarcacao); //Debug
     }
 
     public Integer[] isOccupied() throws SQLException { //Verifica se o assento do onibus está ocupado ou nao
@@ -42,10 +36,10 @@ public class ConexaoAssento {
         comandoAssento.execute();
         ResultSet rs = comandoAssento.getResultSet();
 
-        Integer[] ocupado = new Integer[29]; //MUDANÇA AQUI
+        Integer[] ocupado = new Integer[29];
         int count =0;
 
-        for (int i=0; i<29;i++){ //Pra não dar problema com nulo MUDANÇA AQUI
+        for (int i=0; i<29;i++){ //Pra não dar problema com nulo
             ocupado[i] = -1;
         }
 
@@ -53,9 +47,9 @@ public class ConexaoAssento {
 
         while (rs.next()){
             if(rs.getString(1) != null) {
-                if(rs.getInt(1)>0 && rs.getInt(1)<28){
+                if(rs.getInt(1)>0 && rs.getInt(1)<29){
                     valor = rs.getInt(1);
-                    System.out.println(rs.getString(2)+" "+rs.getInt(1)+"valor: "+valor);
+//                    System.out.println(rs.getString(2)+" "+rs.getInt(1)+" valor: "+valor); //Debug assentos que estão no banco
                     ocupado[valor] = rs.getInt(1);
                     count++;
                 };

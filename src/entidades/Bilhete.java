@@ -1,8 +1,6 @@
 package entidades;
 
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 
 public class Bilhete {
     private String codigo;

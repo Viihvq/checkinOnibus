@@ -21,7 +21,7 @@ public class SolicitaCod {
         cod.add(lblSolicita);
 
         txtSolicita.setColumns(12); //A caixa para escrever tem tamanho de 12 m
-        txtSolicita.setBounds(88, 100, 172, 39);/**/
+        txtSolicita.setBounds(88, 100, 172, 39);
         cod.add(txtSolicita);
 
         btSolicita = new JButton("Próximo");

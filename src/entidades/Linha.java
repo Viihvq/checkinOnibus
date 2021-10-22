@@ -1,7 +1,6 @@
 package entidades;
 
 import java.sql.Time;
-import java.time.LocalDate;
 
 public class Linha {
     private Integer id;

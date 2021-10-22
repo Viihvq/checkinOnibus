@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Assento{
-    private ArrayList<JButton> listaBotoes = new ArrayList<>();//; MUDANÇA AQUI
+    private ArrayList<JButton> listaBotoes = new ArrayList<>();
     private JButton salvar = new JButton("Salvar");
     private Integer assentoSelecionado = null;
     private ConexaoAssento conexaoAssentos;
@@ -21,6 +21,7 @@ public class Assento{
     public Assento(){}
 
     public JPanel criaJPanelAssento(Bilhete bilhete, Connection conexao) throws SQLException {
+
         JPanel painel = new JPanel();
 
         JLabel frase = new JLabel("Selecione o assento de sua preferência");
@@ -42,30 +43,27 @@ public class Assento{
 
         conexaoAssentos = new ConexaoAssento(bilhete,conexao);
         ocupados = conexaoAssentos.isOccupied();
-//        listaBotoes = new ArrayList<>();//MUDANÇA AQUI TESTE SE ISSO RESOLVE
-        listaBotoes.add(new JButton("Numero 0")); //Evita problema nos botões: aperta ume  vai o anterior.
 
-//        for (int i =0; i<14;i++){ //Por questões de gabiarra começa do 0, resolvo isso depois
+        listaBotoes.add(new JButton("Numero 0")); //Evita problema nos botões: aperta um e vai o anterior.
 
-        for(int i = 1; i<=14; i++){ //MUDANÇA AQUI
+        for(int i = 1; i<=14; i++){
             JButton botao = new JButton(""+i);
             botao.addActionListener(cliqueAssentoSelecionado);
             botao.setBorder(BorderFactory.createEmptyBorder(6,20,6,20));
 
-            /**Verificação dos assentos, se está livre ou não*/
+            //Verificação dos assentos, se está livre ou não
             if (ocupados[i]==i){
-                botao.setBackground(Color.RED); //Aparentemente isso não funciona junto com o setEnabled
+//                botao.setBackground(Color.RED);
                 botao.setEnabled(false);
                 listaBotoes.add(botao);
-                setAssento(i,"ocupado"); //MUDANÇA AQUI
+                setAssento(i,"ocupado");
             }else{
                 botao.setBackground(Color.green);
                 listaBotoes.add(botao);
-                setAssento(i,"livre"); //MUDANÇA AQUI
+                setAssento(i,"livre");
             }
             painelEsquerda.add(botao);
         }
-
 
         painel.add(painelEsquerda, BorderLayout.EAST);
 
@@ -80,25 +78,20 @@ public class Assento{
         gl2.setHgap(3);
         painelDireita.setLayout(gl2);
 
-//        for (int i =14; i<28;i++){
-        for(int i = 15; i<=28; i++){ //MUDANÇA AQUI
+        for(int i = 15; i<=28; i++){
             JButton botao = new JButton(""+i);
             botao.addActionListener(cliqueAssentoSelecionado);
             botao.setBorder(BorderFactory.createEmptyBorder(6,20,6,20));
 
-            /**Verificação dos assentos, se está livre ou não*/
+            //Verificação dos assentos, se está livre ou não
             if (ocupados[i]==i){
-                botao.setBackground(Color.RED); //Aparentemente isso não funciona junto com o setEnabled
-                botao.setEnabled(false);
-                /*Essas duas linhas de cima ficam redundantem com o setAssento, mas se eu não
-                  deixá-las dá prolema nos assentos quando clico em salvar e faço o processo todo de novo
-                 */
+//                botao.setBackground(Color.RED);
                 listaBotoes.add(botao);
-                setAssento(i,"ocupado"); //MUDANÇA AQUI
+                setAssento(i,"ocupado");
             }else{
-                botao.setBackground(Color.green); //
+                botao.setBackground(Color.green);
                 listaBotoes.add(botao);
-                setAssento(i,"livre"); //MUDANÇA AQUI
+                setAssento(i,"livre");
             }
             painelDireita.add(botao);
         }
@@ -121,12 +114,12 @@ public class Assento{
         if(assentoSelecionado != null){ //se tem um assento já marcado, ele volta para livre
             setAssento(assentoSelecionado,"livre");
         }
-        assentoSelecionado = listaBotoes.indexOf(e.getSource()); //PROBLEMA DOS BOTOES POSSIVELMENTE TA AQUI
-        System.out.println("O ASSENTO SELECIONADO É: "+assentoSelecionado+"  "+listaBotoes.indexOf(e.getSource()));
+        assentoSelecionado = listaBotoes.indexOf(e.getSource());
+        System.out.println("O ASSENTO SELECIONADO É: "+assentoSelecionado+"  ");
         setAssento(assentoSelecionado, "selecionado");
     };
 
-    public void setAssento(int assento, String situacao){ //aqui da problema se não tiver a redundancia
+    public void setAssento(int assento, String situacao){
         JButton b = listaBotoes.get(assento);
         if(situacao.equals("selecionado")){
             b.setBackground(Color.CYAN);

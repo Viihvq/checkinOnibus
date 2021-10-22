@@ -18,6 +18,6 @@ public class Principal {
 
         //USA O CODIGO BEBBIX PARA TESTAR
 
-        new InterfacePrincipal(conexao);//Passa os dados do banco pra classe
+        new InterfacePrincipal(conexao);
     }
 }

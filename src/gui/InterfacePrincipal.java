@@ -33,16 +33,14 @@ public class InterfacePrincipal extends  JFrame{
         telaSolicitaCod = new SolicitaCod();
         add(getSolicitaCod(), "solicitacao"); //Adiciona a tela e o nome
 
-
         telaInfos = new Infos();
-//        add(getTelaInfos(), "infos"); //talvez de m aqui, nao sei TEM QUE DEIXAR FORA MSM
+//        add(getTelaInfos(), "infos");
 
         telaEditaInfos = new EditaInfos();
-//        add(getTelaEditaInfos(), "edita infos"); TEM QUE DEIXAR FORA MESMO POR CAUSA QUE EU ADICIONO NOS METODOS ABAIXO
+//        add(getTelaEditaInfos(), "edita infos");
 
         telaAssento = new Assento();
 //        add(getTelaAssento(), "assento");
-
 
         botaoInicial(); //ActionListener
         botaoSolicitaCod(); //ActionListener
@@ -79,7 +77,7 @@ public class InterfacePrincipal extends  JFrame{
             }catch (Exception e){
                 JOptionPane.showMessageDialog(null,"ERRO \nFAVOR TENTAR NOVAMENTE!","ERROR",JOptionPane.ERROR_MESSAGE);
             }
-            telaAssento.getListaBotoes().clear(); //LIMPA O ARRAY
+            telaAssento.getListaBotoes().clear(); //LIMPA O ARRAY AO FINAL
         });
     }
 
@@ -92,7 +90,7 @@ public class InterfacePrincipal extends  JFrame{
                 bilheteInfosBanco = conexaoInfos.getInfosBanco(bilheteInfosBanco.getCodigo());
                 this.cardLayout.removeLayoutComponent(getTelaInfos()); //Se não remover, não retorna com as informações novas
                 add(getTelaInfos(), "infos"); //Adiciona de novo para aparecer as informações atualizadas
-                System.out.println("Debug AL salvar");
+//                System.out.println("Debug AL salvar");
                 exibe("infos");
                 setTitle("Informações");
             } catch (SQLException e) {
@@ -121,8 +119,6 @@ public class InterfacePrincipal extends  JFrame{
 
         telaInfos.getBtProx().addActionListener((al) -> {
             try {
-//   n precisa disso, ja tem as infos no global vvvv
-//   bilheteInfosBanco = conexaoInfos.getInfosBanco(telaSolicitaCod.txtSolicita.getText()); //pega as informações do bilhete do banco para a tela de assento
                 add(getTelaAssento(), "assento");
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -137,8 +133,6 @@ public class InterfacePrincipal extends  JFrame{
             try {
                 if (new ConexaoCodigos(conexaoBanco).codLocalizado(telaSolicitaCod.txtSolicita.getText())){
                     conexaoInfos = new ConexaoInfos(conexaoBanco);
-
-//                    bilheteInfosBanco = new ConexaoInfos(conexaoBanco).getInfosBanco(telaSolicitaCod.txtSolicita.getText());
                     bilheteInfosBanco = conexaoInfos.getInfosBanco(telaSolicitaCod.txtSolicita.getText()); //pega as informações do bilhete do banco para a tela de infos
                     add(getTelaInfos(), "infos");
                     exibe("infos");
@@ -169,13 +163,10 @@ public class InterfacePrincipal extends  JFrame{
     }
 
     private JPanel getTelaInicial() throws Exception {
-//        telaInicial = new Home(); //instancio para conseguir acessar o método criaJpanelHome(), se eu fizesse no construtor
-        //nao conseguiria retornar pq o retorno seria o nome da classe, nao um jpanel que é o que quero
         return telaInicial.criaJPanelHome();
     }
 
     private JPanel getSolicitaCod(){
-//        telaSolicitaCod = new SolicitaCod();
         return telaSolicitaCod.criaJPanelSolicita();
     }
 
@@ -184,17 +175,11 @@ public class InterfacePrincipal extends  JFrame{
     }
 
     private JPanel getTelaEditaInfos() throws SQLException {
-//        telaEditaInfos = new EditaInfos(); //Se eu fizer isso não funciona a volta dos botoes att e voltar
-        return telaEditaInfos.criaJPanelEditaInfos(bilheteInfosBanco, conexaoInfos); //Tenho que passar o bilhete com as infos e a classe que tem os metodos de procura
+        return telaEditaInfos.criaJPanelEditaInfos(bilheteInfosBanco); //Tenho que passar o bilhete com as infos e a classe que tem os metodos de procura
     }
 
     private JPanel getTelaAssento() throws SQLException {
-//        telaAssento = new Assento();
         return telaAssento.criaJPanelAssento(bilheteInfosBanco, conexaoBanco);
     }
 
-//    public static void main(String[] args) throws SQLException {
-//        new InterfacePrincipal(DriverManager.getConnection("jdbc:postgresql://134.209.243.185:5432/vavatur",
-//                "vavatur", "gGgLqu"));
-//    }
 }

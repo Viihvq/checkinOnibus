@@ -1,21 +1,17 @@
 package gui;
 
-import dados.ConexaoInfos;
 import entidades.Bilhete;
 import javax.swing.*;
 import java.awt.*;
-import java.sql.Connection;
 
 public class EditaInfos {
     JButton salvar = new JButton("Salvar");
     JButton voltar = new JButton("Voltar");
-    JTextField editaCpf;// = new JTextField();
-    JTextField editaNome;// = new JTextField();
-    Connection conexaoBanco;
+    JTextField editaCpf;
+    JTextField editaNome;
 
     public EditaInfos(){}
-    //resolver esse segundo argumento<<<<<<<<<<<<<<<<<<<<<
-    public JPanel criaJPanelEditaInfos(Bilhete bilhete, ConexaoInfos conexaoInfos){
+    public JPanel criaJPanelEditaInfos(Bilhete bilhete){
         JPanel geral = new JPanel();
 
         JLabel titulo = new JLabel("EDIÇÃO DOS DADOS");
@@ -37,7 +33,6 @@ public class EditaInfos {
         editaNome.setColumns(20);
         panelEdicao1.add(editaNome);
 
-        //------------------
         JPanel panelEdicao2 = new JPanel();
 
         panelEdicao2.setBorder(BorderFactory.createEmptyBorder(0,20,20,50));
@@ -52,7 +47,6 @@ public class EditaInfos {
         editaCpf = new JTextField(cpfPassageiroBanco); //Faz aparecer o cpf no texto
         editaCpf.setColumns(20);
         panelEdicao2.add(editaCpf);
-
 
         JPanel opcoes = new JPanel();
         opcoes.setBorder(BorderFactory.createEmptyBorder(10,20,78,20));
