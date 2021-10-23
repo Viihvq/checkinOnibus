@@ -35,7 +35,7 @@ public class ConexaoInfos{
     public Bilhete getInfosBanco(String codigo) throws SQLException {
 
         PreparedStatement comandoListarInfos = conexao.prepareStatement("SELECT \"bilhete\".codigo, \"bilhete\".assento ,\"passageiro\".id,\"passageiro\".nome, \"passageiro\".cpf, \"linha\".origem, " +
-                "\"linha\".destino, \"linha\".hora_embarque, \"linha\".hora_partida FROM \"public\".\"linha\" JOIN \"public\".\"bilhete\" ON \"linha\".id = \"bilhete\".id_linha " +
+                "\"linha\".destino, \"linha\".hora_embarque, \"linha\".hora_partida, \"linha\".id FROM \"public\".\"linha\" JOIN \"public\".\"bilhete\" ON \"linha\".id = \"bilhete\".id_linha " +
                 "JOIN \"public\".\"passageiro\" ON \"bilhete\".id_passageiro = \"passageiro\".id AND \"bilhete\".codigo = ?;");
         //cod, assento, nome, cpf, origem, destino, embarque, partida
         comandoListarInfos.setString(1, codigo);
@@ -53,6 +53,7 @@ public class ConexaoInfos{
             linha.setDestino(rs.getString(7));
             linha.setHora_embarque(rs.getTime(8));
             linha.setHora_partida(rs.getTime(9));
+            linha.setId(rs.getInt(10)); //
             bilhete.setPassageiro(passageiro);
             bilhete.setLinha(linha);
         }

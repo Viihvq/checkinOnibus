@@ -32,7 +32,8 @@ public class ConexaoAssento {
 
     public Integer[] isOccupied() throws SQLException { //Verifica se o assento do onibus está ocupado ou nao
         PreparedStatement comandoAssento = conexao.prepareStatement("SELECT \"bilhete\".\"assento\", " +
-                "\"bilhete\".\"codigo\" FROM \"public\".\"bilhete\";");
+                "\"bilhete\".\"codigo\"  FROM \"public\".\"bilhete\" WHERE \"bilhete\".\"id_linha\" = "+bilhete.getLinha().getId()+";");
+//        comandoAssento.setInt(1,bilhete.getLinha().getId());
         comandoAssento.execute();
         ResultSet rs = comandoAssento.getResultSet();
 
@@ -44,20 +45,26 @@ public class ConexaoAssento {
         }
 
         int valor = 0;
+//        int valLinha = bilhete.getLinha().getId();
+//        System.out.println("VALOR DA LINHA "+valLinha);
 
         while (rs.next()){
             if(rs.getString(1) != null) {
                 if(rs.getInt(1)>0 && rs.getInt(1)<29){
                     valor = rs.getInt(1);
-//                    System.out.println(rs.getString(2)+" "+rs.getInt(1)+" valor: "+valor); //Debug assentos que estão no banco
+                    System.out.println(rs.getString(2)+" "+rs.getInt(1)+" valor: "+valor); //Debug assentos que estão no banco
                     ocupado[valor] = rs.getInt(1);
                     count++;
-                };
+                }
             }else{
-                ocupado[count] = -1;
+//                ocupado[count] = -1; // <<<<<<<<<<<<< ERA ISSO AQUI
                 count++;
             }
         }
+
+//        for (int i=0; i<29;i++){
+//            System.out.println("DENTRO DO CONEXAO ASSENTO"+ocupado[i]);
+//        }
 
         return  ocupado;
     }

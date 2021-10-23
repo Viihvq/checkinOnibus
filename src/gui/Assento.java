@@ -46,16 +46,72 @@ public class Assento{
 
         listaBotoes.add(new JButton("Numero 0")); //Evita problema nos botões: aperta um e vai o anterior.
 
-        for(int i = 1; i<=14; i++){
+//        for(int i = 1; i<=14; i++){
+//            JButton botao = new JButton(""+i);
+//            botao.addActionListener(cliqueAssentoSelecionado);
+//            botao.setBorder(BorderFactory.createEmptyBorder(6,20,6,20));
+//
+//            //Verificação dos assentos, se está livre ou não
+//            if (ocupados[i]==i){
+//                botao.setBackground(Color.RED);
+//                botao.setEnabled(false);
+//                listaBotoes.add(botao);
+//                setAssento(i,"ocupado");
+//            }else{
+//                botao.setBackground(Color.green);
+//                listaBotoes.add(botao);
+//                setAssento(i,"livre");
+//            }
+//            painelEsquerda.add(botao);
+//        }
+//
+//        painel.add(painelEsquerda, BorderLayout.EAST);
+//
+//        //Adiciona um espaço entre as fileiras
+//        painel.add(new Box.Filler(new Dimension(40,5),new Dimension(40,5),new Dimension(40,5)));
+//
+//        JPanel painelDireita = new JPanel();
+//        painelDireita.setBackground(new Color(94, 232, 230));
+//
+//        GridLayout gl2 = new GridLayout(7,2);
+//        gl2.setVgap(3);
+//        gl2.setHgap(3);
+//        painelDireita.setLayout(gl2);
+//
+//        for(int i = 15; i<=28; i++){
+//            JButton botao = new JButton(""+i);
+//            botao.addActionListener(cliqueAssentoSelecionado);
+//            botao.setBorder(BorderFactory.createEmptyBorder(6,20,6,20));
+//
+//            //Verificação dos assentos, se está livre ou não
+//            if (ocupados[i]==i){
+//                botao.setBackground(Color.RED);
+//                botao.setEnabled(false);
+//                listaBotoes.add(botao);
+//                setAssento(i,"ocupado");
+//            }else{
+//                botao.setBackground(Color.green);
+//                listaBotoes.add(botao);
+//                setAssento(i,"livre");
+//            }
+//            painelDireita.add(botao);
+//        }
+
+
+        for(int i = 1; i<29; i++){
             JButton botao = new JButton(""+i);
             botao.addActionListener(cliqueAssentoSelecionado);
             botao.setBorder(BorderFactory.createEmptyBorder(6,20,6,20));
 
             //Verificação dos assentos, se está livre ou não
+
+            System.out.println("OCUPADOS[i] "+ocupados[i]);
+
             if (ocupados[i]==i){
-//                botao.setBackground(Color.RED);
+                botao.setBackground(Color.RED);
                 botao.setEnabled(false);
                 listaBotoes.add(botao);
+                System.out.println("BOTAO DESABILITADO"+i);
                 setAssento(i,"ocupado");
             }else{
                 botao.setBackground(Color.green);
@@ -65,43 +121,19 @@ public class Assento{
             painelEsquerda.add(botao);
         }
 
-        painel.add(painelEsquerda, BorderLayout.EAST);
+        painel.add(painelEsquerda);
 
-        //Adiciona um espaço entre as fileiras
-        painel.add(new Box.Filler(new Dimension(40,5),new Dimension(40,5),new Dimension(40,5)));
-
-        JPanel painelDireita = new JPanel();
-        painelDireita.setBackground(new Color(94, 232, 230));
-
-        GridLayout gl2 = new GridLayout(7,2);
-        gl2.setVgap(3);
-        gl2.setHgap(3);
-        painelDireita.setLayout(gl2);
-
-        for(int i = 15; i<=28; i++){
-            JButton botao = new JButton(""+i);
-            botao.addActionListener(cliqueAssentoSelecionado);
-            botao.setBorder(BorderFactory.createEmptyBorder(6,20,6,20));
-
-            //Verificação dos assentos, se está livre ou não
-            if (ocupados[i]==i){
-//                botao.setBackground(Color.RED);
-                listaBotoes.add(botao);
-                setAssento(i,"ocupado");
-            }else{
-                botao.setBackground(Color.green);
-                listaBotoes.add(botao);
-                setAssento(i,"livre");
-            }
-            painelDireita.add(botao);
-        }
-
-        painel.add(painelDireita, BorderLayout.WEST);
+//        painel.add(painelDireita, BorderLayout.WEST);
 
         salvar.setBorder(BorderFactory.createEmptyBorder(10,45,10,45));
         salvar.setBackground(new Color(238, 247, 246));
         salvar.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
         painel.add(salvar, BorderLayout.SOUTH);
+
+//        for (int i=0; i<listaBotoes.toArray().length; i++){
+//            System.out.println("LISTA DE BOTOES:"+(listaBotoes.get(i)));
+//        }
+
 
         return painel;
     }
